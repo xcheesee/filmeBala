@@ -2,6 +2,8 @@ import { type NextPage } from "next";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { moviesComms, filmeDb } from "../server/db/filmeTempDb"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faThumbsUp, faStar, faThumbsDown } from '@fortawesome/free-solid-svg-icons'
 
 const Home: NextPage = () => {
 
@@ -35,6 +37,20 @@ const Home: NextPage = () => {
                         {`${filmeDb[+filmeId!]?.rtRating}/10`}
                     </div>
 
+                </div>
+                <div className="flex justify-between w-[min(70ch,100%)]">
+                    <span className="text-yellow-500">
+                        <FontAwesomeIcon icon={faStar} size="3x"/>
+                    </span>
+                    <div className="flex gap-4">
+                        <span className="text-blue-500">
+                            <FontAwesomeIcon icon={faThumbsUp} size="3x"/>
+                        </span>
+                        <span className="text-red-500 relative top-3">
+                            <FontAwesomeIcon icon={faThumbsDown} size="3x"/>
+                        </span>
+
+                    </div>
                 </div>
             </div>
             <div className="md:col-span-2 justify-self-center md:w-[720px] w-full">
