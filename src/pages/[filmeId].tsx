@@ -5,7 +5,7 @@ import { moviesComms, filmeDb } from "../server/db/filmeTempDb"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faThumbsUp, faStar, faThumbsDown } from '@fortawesome/free-solid-svg-icons'
 
-const Home: NextPage = () => {
+const FilmePage: NextPage = () => {
 
     const router = useRouter()
     const { filmeId } = router.query
@@ -76,4 +76,4 @@ const Home: NextPage = () => {
     )
 }
 
-export default Home
+export default FilmePage
