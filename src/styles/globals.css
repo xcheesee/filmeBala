@@ -5,3 +5,19 @@
 div, p {
     color: #d4d4d4;
 }
+
+
+.infiniteScroll {
+    animation: infiniteScroll 25s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+@keyframes infiniteScroll {
+    0% {
+        transform: translateX(0px);
+    }
+    100%{
+        transform: translateX(-200%);
+    }
+}
