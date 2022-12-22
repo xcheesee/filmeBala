@@ -13,7 +13,7 @@ const FilmePage: NextPage = () => {
     return (
         <div className="grid md:grid-cols-[min(500px,100%)_1fr]  md:grid-rows-[1fr_min-content] justify-self-center" style={{width: "min(1400px, 100%)"}}>
             <div className="">
-                <div className="h-full lg:p-8" style={{width: "min(500px, 90%)"}}>
+                <div className="h-full lg:p-8" style={{width: "min(500px, 100%)"}}>
                     <img src="https://m.media-amazon.com/images/M/MV5BOTI0MzcxMTYtZDVkMy00NjY1LTgyMTYtZmUxN2M3NmQ2NWJhXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_FMjpg_UX1000_.jpg"
                         alt="Movie banner" 
                         className="object-cover"
@@ -38,7 +38,7 @@ const FilmePage: NextPage = () => {
                     </div>
 
                 </div>
-                <div className="flex justify-between w-[min(70ch,100%)]">
+                <div className="flex justify-between w-[min(70ch,100%)] mt-auto pb-4 pr-4">
                     <span className="text-yellow-500">
                         <FontAwesomeIcon icon={faStar} size="3x"/>
                     </span>

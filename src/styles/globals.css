@@ -8,9 +8,23 @@ div, p {
 
 
 .infiniteScroll {
-    animation: infiniteScroll 25s;
+    animation: infiniteScroll 15s;
     animation-iteration-count: infinite;
     animation-timing-function: linear;
+}
+
+:hover.mCard {
+    animation: height 1s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes height {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0.8;
+    }
 }
 
 @keyframes infiniteScroll {
@@ -18,6 +32,6 @@ div, p {
         transform: translateX(0px);
     }
     100%{
-        transform: translateX(-200%);
+        transform: translateX(-100%);
     }
 }
