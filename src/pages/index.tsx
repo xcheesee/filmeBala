@@ -25,7 +25,12 @@ const Home: NextPage = () => {
             </div>
             <div className="py-8 lg:px-4">
                 <p>Populares</p>
-                <div className="w-full h-[300px] bg-red-200 gap-4 flex py-2">
+                <div className="w-full h-[300px] gap-4 flex py-2">
+                    <MovieCard />
+                    <MovieCard />
+                    <MovieCard />
+                    <MovieCard />
+                    <MovieCard />
                     <MovieCard />
                     <MovieCard />
                 </div>
