@@ -10,7 +10,7 @@ const Home: NextPage = () => {
 
     return(
         <>
-            <div className="w-screen relative overflow-hidden" style={{height: "calc(100vh - 56px)"}}>
+            <div className="max-w-[100vw] relative overflow-hidden" style={{height: "calc(100vh - 56px)"}}>
                 <div className="absolute z-10 h-full w-full bg-[rgba(0,0,0,0.85)] flex flex-col justify-center items-center gap-4">
                     <p className="text-7xl tracking-widest font-light  py-8">SO FILME BALA</p>
                     <p className="text-3xl">De Mafioso, De Guerra, De Luta, De Tiro, etc. so os bom mlk.</p>
