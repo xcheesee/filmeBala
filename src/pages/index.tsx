@@ -1,14 +1,16 @@
+import { useQuery } from "@tanstack/react-query";
 import { type NextPage } from "next";
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import { TypeOf } from "zod";
 import MovieCard from "../components/movieCard";
 
 const Home: NextPage = () => {
 
+    const { isLoading, error, data } = useQuery(['popData'], async () => await ( await fetch('https://api.themoviedb.org/3/discover/movie?api_key=${env.TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1')).json())
+    console.log(data)
+
     return(
         <>
-            <div className="w-full relative overflow-hidden" style={{height: "calc(100vh - 56px)"}}>
+            <div className="w-screen relative overflow-hidden" style={{height: "calc(100vh - 56px)"}}>
                 <div className="absolute z-10 h-full w-full bg-[rgba(0,0,0,0.85)] flex flex-col justify-center items-center gap-4">
                     <p className="text-7xl tracking-widest font-light  py-8">SO FILME BALA</p>
                     <p className="text-3xl">De Mafioso, De Guerra, De Luta, De Tiro, etc. so os bom mlk.</p>
@@ -26,22 +28,40 @@ const Home: NextPage = () => {
             <div className="py-8 lg:px-4">
                 <p>Populares</p>
                 <div className="w-full h-[300px] gap-4 flex py-2">
-                    <MovieCard />
-                    <MovieCard />
-                    <MovieCard />
-                    <MovieCard />
-                    <MovieCard />
-                    <MovieCard />
-                    <MovieCard />
+                    {data?.results?.map((entry: any) => 
+                    <MovieCard 
+                        name={entry.original_title} 
+                        description={entry.overview} 
+                        playtime="2h" 
+                        ratings={entry.vote_average} 
+                        id={entry.id} />)}
+
                 </div>
             </div>
             <div className="py-8 lg:px-4">
                 <p>Tiro</p>
-                <div className="w-full h-[300px] bg-red-200"></div>
+                <div className="w-full h-[300px] gap-4 flex py-2">
+                    {/* <MovieCard />
+                    <MovieCard />
+                    <MovieCard />
+                    <MovieCard />
+                    <MovieCard />
+                    <MovieCard />
+                    <MovieCard />
+                    <MovieCard /> */}
+                </div>
             </div>
             <div className="py-8 lg:px-4">
                 <p>Guerra</p>
-                <div className="w-full h-[300px] bg-red-200"></div>
+                <div className="w-full h-[300px] gap-4 flex py-2">
+                    {/* <MovieCard />
+                    <MovieCard />
+                    <MovieCard />
+                    <MovieCard />
+                    <MovieCard />
+                    <MovieCard />
+                    <MovieCard /> */}
+                </div>
             </div>
         </>
     )

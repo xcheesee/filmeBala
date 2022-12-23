@@ -8,7 +8,7 @@ div, p {
 
 
 .infiniteScroll {
-    animation: infiniteScroll 15s;
+    animation: infiniteScroll 30s;
     animation-iteration-count: infinite;
     animation-timing-function: linear;
 }
