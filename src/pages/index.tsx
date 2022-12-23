@@ -34,6 +34,7 @@ const Home: NextPage = () => {
                         description={entry.overview} 
                         playtime="2h" 
                         ratings={entry.vote_average} 
+                        image={entry.poster_path}
                         id={entry.id} />)}
 
                 </div>
