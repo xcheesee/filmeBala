@@ -1,11 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
 import { type NextPage } from "next";
 import Image from "next/image";
+import { useState } from "react";
 import MovieCard from "../components/movieCard";
+import { CARD_IMAGE_SIZE } from "../utils/constants";
 
 const Home: NextPage = () => {
 
     const { isLoading, error, data } = useQuery(['popData'], async () => await ( await fetch('https://api.themoviedb.org/3/discover/movie?api_key=${env.TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1')).json())
+    const [slideCount, setSlideCount] = useState(0)
     console.log(data)
 
     return(
@@ -25,9 +28,11 @@ const Home: NextPage = () => {
                     </div>
                 </div>
             </div>
-            <div className="py-8 lg:px-4">
+            <div className="py-8 lg:px-4 relative overflow-hidden">
                 <p>Populares</p>
-                <div className="w-full h-[300px] gap-4 flex py-2">
+                <div className="absolute left-5 z-10 top-1/2 font-bold">back</div>
+                <div className="absolute right-5 z-10 top-1/2 font-bold">foward</div>
+                <div className="h-[300px] gap-5 flex py-2 transition duration-500 relative flex-none" style={{transform: `translateX(-${(CARD_IMAGE_SIZE + 20) * 4}px)`}}>
                     {data?.results?.map((entry: any) => 
                     <MovieCard 
                         name={entry.original_title} 
@@ -42,14 +47,6 @@ const Home: NextPage = () => {
             <div className="py-8 lg:px-4">
                 <p>Tiro</p>
                 <div className="w-full h-[300px] gap-4 flex py-2">
-                    {/* <MovieCard />
-                    <MovieCard />
-                    <MovieCard />
-                    <MovieCard />
-                    <MovieCard />
-                    <MovieCard />
-                    <MovieCard />
-                    <MovieCard /> */}
                 </div>
             </div>
             <div className="py-8 lg:px-4">

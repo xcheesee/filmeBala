@@ -1,0 +1,3 @@
+const CARD_IMAGE_SIZE = 250
+
+export { CARD_IMAGE_SIZE }
