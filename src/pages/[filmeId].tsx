@@ -4,17 +4,23 @@ import { useRouter } from "next/router";
 import { moviesComms, filmeDb } from "../server/db/filmeTempDb"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faThumbsUp, faStar, faThumbsDown } from '@fortawesome/free-solid-svg-icons'
+import { useQuery } from "@tanstack/react-query";
+import { CARD_IMAGE_SIZE } from "../utils/constants";
+import { trpc } from "../utils/trpc";
 
 const FilmePage: NextPage = () => {
-
+    
     const router = useRouter()
-    const { filmeId } = router.query
+    const filmeId = router.query.filmeId || 0
+    const filme = trpc.filmes.getFilme.useQuery(+filmeId)
+    const { isLoading, error, data } = useQuery(['movie', filmeId], async () => await (await fetch(`http://localhost:3000/api/movies/movie?id=${filmeId}`)).json())
+    console.log(data, filmeId, filme)
 
     return (
         <div className="grid md:grid-cols-[min(500px,100%)_1fr]  md:grid-rows-[1fr_min-content] justify-self-center" style={{width: "min(1400px, 100%)"}}>
             <div className="">
                 <div className="h-full lg:p-8" style={{width: "min(500px, 100%)"}}>
-                    <img src="https://m.media-amazon.com/images/M/MV5BOTI0MzcxMTYtZDVkMy00NjY1LTgyMTYtZmUxN2M3NmQ2NWJhXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_FMjpg_UX1000_.jpg"
+                    <img src={`https://image.tmdb.org/t/p/w500${filme?.posterPath}`}
                         alt="Movie banner" 
                         className="object-cover"
                         />
@@ -22,20 +28,20 @@ const FilmePage: NextPage = () => {
             </div>
             <div className="flex flex-col gap-16 py-4 mt-8">
                 <div className="font-light text-7xl tracking-wider">
-                    {filmeDb[+filmeId!]?.name}
+                    {filme?.data?.title}
                 </div>
                 <div className="max-w-[70ch]">
-                    {filmeDb[+filmeId!]?.description}
+                    {filme?.data?.overview}
                 </div>
                 <div className="flex gap-8">
                     <div className="flex gap-2">
                         <p className="font-bold color-neutral-500">Avaliacao IMDb:</p>
-                        {`${filmeDb[+filmeId!]?.mainRating}/10`}
+                        {`${filme?.data?.ratings?.toFixed(1)}/10`}
                     </div>
-                    <div className="flex gap-2">
+                    {/* <div className="flex gap-2">
                         <p className="font-bold color-neutral-500">Avaliacao Filmin:</p>
                         {`${filmeDb[+filmeId!]?.rtRating}/10`}
-                    </div>
+                    </div> */}
 
                 </div>
                 <div className="flex justify-between w-[min(70ch,100%)] mt-auto pb-4 pr-4">

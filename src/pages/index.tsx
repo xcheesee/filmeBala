@@ -22,15 +22,21 @@ const Home: NextPage = () => {
                     </div>
                 </div>
             </div>
-            <MovieSlider
-                name='populares' 
-                path={`https://api.themoviedb.org/3/discover/movie?api_key=${env.TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`}/>
+            <div className="flex justify-center relative overflow-hidden justify-self-center">
+                <MovieSlider
+                    name='populares' 
+                    path='http://localhost:3000/api/movies/populares'/>
+            </div>
+            <div className="flex justify-center relative overflow-hidden justify-self-center">
             <MovieSlider 
                 name='acao' 
-                path='https://api.themoviedb.org/3/discover/movie?api_key=${env.TMDB_API_KEY}&language=en-US&with_genres=28&sort_by=popularity.desc&include_adult=false&include_video=false&page=1'/>
+                path='http://localhost:3000/api/movies/populares?genre=28'/>
+            </div>
+            <div className="flex justify-center relative overflow-hidden justify-self-center">
             <MovieSlider
                 name='comedia'
-                path='https://api.themoviedb.org/3/discover/movie?api_key=${env.TMDB_API_KEY}&language=en-US&with_genres=35&sort_by=popularity.desc&include_adult=false&include_video=false&page=1' />
+                path='http://localhost:3000/api/movies/populares?genre=35' />
+            </div>
         </>
     )
 }

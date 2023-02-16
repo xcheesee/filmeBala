@@ -13,13 +13,87 @@ datasource db {
   // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
   // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string
   url      = env("DATABASE_URL")
-  referentialIntegrity = "prisma"
+  relationMode = "prisma"
 }
 
-model Example {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+// model Example {
+//   id        String   @id @default(cuid())
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+// }
+
+model MdbUser {
+  id Int @id @default(autoincrement())
+  email String @unique
+  name String
+  surname String
+  age Int?
+  comments Comment[]
+  likes MovieLike[]
+  ratings MovieRating[]
+}
+
+model Movie {
+  id Int @id
+  title String
+  overview String @db.VarChar(500)
+  tagline String @db.VarChar(300)
+  releaseDate String
+  posterPath String
+  runtime Int
+  ratings Float
+  Status String
+  nativeRatings MovieRating[]
+  likes MovieLike[]
+  comments Comment[]
+  genres Genre[] //implicit m-n relation
+}
+
+model MovieRating {
+  authorId Int
+  movieId Int
+  rating Int
+  Movie Movie @relation(fields: [movieId], references: [id])
+  Author MdbUser @relation(fields: [authorId], references: [id])
+  @@index(movieId)
+  @@index(authorId)
+  @@id([authorId, movieId])
+}
+
+model Genre {
+  id Int @id
+  name String
+  movies Movie[] //implicit m-n relation
+}
+
+// model MovieGenre {
+//   movieId Int
+//   genreId Int
+//   MGenre Movie @relation(fields: [])
+
+//   @@id([movieId, genreId])
+//   @@index([])
+// }
+
+model Comment {
+  authorId Int
+  movieId Int
+  CommAuthor MdbUser? @relation(fields: [authorId], references: [id])
+  CommedMovie Movie? @relation(fields: [movieId], references: [id])
+
+  @@index(authorId)
+  @@index(movieId)
+  @@id([authorId, movieId])
+}
+
+model MovieLike {
+  authorId Int @id
+  LikeAuthor MdbUser @relation(fields: [authorId], references: [id])
+  movieId Int
+  LikedMovie Movie @relation(fields: [movieId], references: [id])
+
+  @@index([authorId])
+  @@index([movieId])
 }
 
 // Necessary for Next auth
@@ -39,6 +113,7 @@ model Account {
   user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+  @@index([userId])
 }
 
 model Session {
@@ -47,6 +122,8 @@ model Session {
   userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }
 
 model User {
