@@ -27,7 +27,7 @@ export const filmesRouter = router({
                         runtime: json.runtime,
                         ratings: json.vote_average,
                         Status: json.status,
-                        posterPath: json.poster_path
+                        posterPath: json.poster_path,
                     }
                 })
             }
