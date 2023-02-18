@@ -1,74 +1,129 @@
 import { NextPage } from "next"
+import { useRouter } from "next/router"
+import { useState } from "react"
+import Button from "../components/button"
+import CircularLoader from "../components/circularLoader"
+import Dialog from "../components/dialog"
 import Input from "../components/Input"
 import { GRADIENT_COLOR } from "../utils/constants"
 import { trpc } from "../utils/trpc"
 
 const Signup: NextPage = () => {
+    const signUpMutation = trpc.auth.signUp.useMutation()
+    const loginMutation = trpc.auth.login.useMutation()
+    const [signUpDialog, setSignUpDialog] = useState(false)
+    const [signUpErrorDialog, setSignUpErrorDialog] = useState(false)
+    const router = useRouter()
     return(
-        <div className="w-3/6 bg-neutral-900 self-center justify-self-center rounded relative b-10" style={{
-            // background: GRADIENT_COLOR,
-        }}>
-            <div
-                className="grid grid-cols-[1fr_min-content_1fr] h-full bg-neutral-900 relative top-2 rounded-b"
-            >
-                <form className="flex flex-col gap-6  w-3/4 mt-32 mx-auto" id="login-form">
-                    <h1 className="tracking-wider font-bold text-3xl -ml-2">Login</h1>
-                    <Input id="username" name="username" label="Username" />
-                    {/* <div className="flex flex-col flex-none gap-2">
-                        <label htmlFor="username">
-                            Username
-                        </label>
-                        <input id="username" name="username"/>
-
-                    </div> */}
-                    <Input id="password" name="password" label="Password" type="password"/>
-                    {/* <div className="flex flex-col gap-2">
-                        <label htmlFor="password">
-                            Password
-                        </label>
-                        <input id="password" name="password"/>
-                    </div> */}
-                    <div className="flex justify-end">
-                        <button type="submit" className="bg-blue-600 justify-self-end rounded font-bold tracking-wider py-2 px-4">Login</button>
-                    </div>
-                </form>
-                <div className="h-5/6 w-[3px] self-center justify-self-center" style={{
-                    background: GRADIENT_COLOR
-                }}></div>
-                <form 
-                    className="flex flex-col gap-6  w-3/4 m-auto py-8" 
-                    id="signup-form"
-                    autoComplete="off"
-                    onSubmit={(e) => {
-                        e.preventDefault()
-                        const formData = Object.fromEntries(new FormData(e.target as HTMLFormElement) as unknown as Iterable<[RequestData, FormDataEntryValue]>)
-                        console.log(formData)
-                        // trpc.auth.signUp.useQuery({
-                        //     name: formData.name,
-                        //     surname: formData.surname,
-                        //     username: formData.username,
-
-                        // })
-                    }}
+        <>
+            <div className="w-3/6 bg-neutral-900 self-center justify-self-center rounded relative b-10" style={{
+                // background: GRADIENT_COLOR,
+            }}>
+                <div
+                    className="grid grid-cols-[1fr_min-content_1fr] h-full bg-neutral-900 relative top-2 rounded-b"
                 >
-                    <p className="tracking-wider -ml-2">Ainda nao é usuario?</p>
-                    <h1 className="tracking-wider font-bold text-xl -ml-2">Cadastre-se</h1>
-                    <Input name="signup-username" id="signup-username" label="Username" required />
-                    <Input name="signup-password" id="signup-password" label="Password" type="password" required/>
-                    <Input name="signup-pw-confirm" id="signup-pw-confirm" label="Confirm Password" type="password" />
-                    <Input name="name" id="name" label="Name" required/>
-                    <Input name="surname" id="surname" label="Surname" required/>
-                    <Input name="surname" id="surname" label="Age" required/>
-                    <div className="flex justify-end">
-                        <button type="submit" className="bg-blue-600 justify-self-end rounded font-bold tracking-wider py-2 px-4 mt-4">Sign Up</button>
-                    </div>
-                </form>
-
+                    <form 
+                        className="flex flex-col gap-6  w-3/4 m-auto" 
+                        id="login-form"
+                        onSubmit={(e) => {
+                            e.preventDefault()
+                            const formData = Object.fromEntries(new FormData(e.currentTarget)) as unknown as LoginForm
+                            loginMutation.mutate(formData, {
+                                onSuccess: () => router.push("/")
+                            })
+                        }}
+                        >
+                        <h1 className="tracking-wider font-bold text-3xl -ml-2">Login</h1>
+                        <Input id="username" name="username" label="Username" />
+                        <Input id="password" name="password" label="Password" type="password"/>
+                        <div className="flex justify-end">
+                            <Button type="submit"><div className="text-neutral-700 flex gap-2 content-center">{signUpMutation.isLoading
+                                ?<CircularLoader/> : <></>}Login</div></Button>
+                        </div>
+                    </form>
+                    <div className="h-5/6 w-[3px] self-center justify-self-center" style={{
+                        background: GRADIENT_COLOR
+                    }}></div>
+                    <form
+                        className="grid grid-cols-2 gap-6  w-3/4 m-auto py-8"
+                        id="signup-form"
+                        autoComplete="off"
+                        onSubmit={async (e) => {
+                            e.preventDefault()
+                            const formData = Object.fromEntries(new FormData(e.currentTarget))  as unknown as SignUpForm
+                            if(formData.signup_password !== formData.signup_pw_confirm) {
+                                console.log('senha difere!')
+                                return
+                            }
+                            signUpMutation.mutate({
+                                name: formData.name,
+                                    surname: formData.surname,
+                                    username: formData.signup_username,
+                                    password: formData.signup_password,
+                                    age: +formData.age,
+                                }, {
+                                    onSuccess: () => setSignUpDialog(true),
+                                    onError: () => setSignUpErrorDialog(true),
+                                    
+                                })
+                        }}
+                    >
+                        <p className="tracking-wider -ml-2 col-span-2">Ainda nao é usuario?</p>
+                        <h1 className="tracking-wider font-bold text-xl -ml-2 col-span-2">Cadastre-se</h1>
+                        <Input name="signup_username" id="signup_username" label="Username" required className="col-span-2"/>
+                        <Input name="signup_password" id="signup_password" label="Password" type="password" required className="col-span-2"/>
+                        <Input name="signup_pw_confirm" id="signup-pw-confirm" label="Confirm Password" type="password" className="col-span-2"/>
+                        <Input name="name" id="name" label="Name" required/>
+                        <Input name="surname" id="surname" label="Surname" required/>
+                        <Input name="age" id="age" label="Age" required className="col-span-2"/>
+                        <div className="flex justify-end col-start-2">
+                            <Button type="submit">
+                                <div className="text-neutral-700 flex gap-2 content-center">{signUpMutation.isLoading
+                                ?<CircularLoader/> : <></>}Sign Up</div>
+                            </Button>
+                        </div>
+                    </form>
+                </div>
             </div>
-                {/* <input /> */}
-
-        </div>
+            <Dialog open={signUpDialog}>
+                <div className="font-bold place-content-start text-3xl text-neutral-700">Conta criada com sucesso!</div>
+                <div className="self-center justify-self-center text-neutral-700 my-4">Retorne a pagina e faca seu login</div>
+                <div className="justify-self-end">
+                    <Button
+                        onClick={() => setSignUpDialog(false)}
+                    >
+                        Ok
+                    </Button>
+                </div>
+            </Dialog>
+            <Dialog open={signUpErrorDialog}>
+                <div className="font-bold place-content-start text-3xl text-neutral-700">Erro!</div>
+                <div className="self-center justify-self-center text-neutral-700 my-4">{signUpMutation.error?.message}</div>
+                <div className="justify-self-end">
+                    <Button
+                        onClick={() => setSignUpErrorDialog(false)}
+                    >
+                        Ok
+                    </Button>
+                </div>
+            </Dialog>
+        </>
     )
+}
+
+interface SignUpForm {
+    name: string;
+    surname: string;
+    signup_username: string;
+    signup_password: string;
+    signup_pw_confirm: string;
+    age: string;
+
+}
+
+interface LoginForm {
+    username: string;
+    password: string;
 }
 
 export default Signup

@@ -13,8 +13,6 @@ const FilmePage: NextPage = () => {
     const router = useRouter()
     const filmeId = router.query.filmeId || 0
     const filme = trpc.filmes.getFilme.useQuery(+filmeId)
-    // const { isLoading, error, data } = useQuery(['movie', filmeId], async () => await (await fetch(`http://localhost:3000/api/movies/movie?id=${filmeId}`)).json())
-    // console.log(data, filmeId, filme)
 
     return (
         <div className="grid md:grid-cols-[min(500px,100%)_1fr]  md:grid-rows-[1fr_min-content] justify-self-center" style={{width: "min(1400px, 100%)"}}>

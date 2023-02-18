@@ -18,6 +18,48 @@ div, p {
     animation-fill-mode: forwards;
 }
 
+.loader {
+    margin: 0px auto;
+    width: 25px;
+    height: 25px;
+}
+
+.loader-path {
+    fill: none;
+    stroke: blue;
+    stroke-width: 3px;
+    stroke-linecap: round;
+    animation: animate-stroke 1.5s ease-in-out infinite;
+}
+
+@keyframes rotate {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.circular-loader {
+    animation: rotate 2s linear infinite;
+}
+
+@keyframes animate-stroke {
+    0% {
+        stroke-dasharray: 1, 200;
+        stroke-dashoffset: 0;
+        stroke: black;
+    }
+    50% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -35;
+        stroke: black;
+    }
+    100% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -124;
+        stroke: black;
+    }
+}
+
 @keyframes height {
     0% {
         background: rgba(38, 38, 38, 1);
