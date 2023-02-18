@@ -15,7 +15,7 @@ const FilmePage: NextPage = () => {
     const filme = trpc.filmes.getFilme.useQuery(+filmeId)
 
     return (
-        <div className="grid md:grid-cols-[min(500px,100%)_1fr]  md:grid-rows-[1fr_min-content] justify-self-center" style={{width: "min(1400px, 100%)"}}>
+        <div className="grid md:grid-cols-[min(500px,100%)_1fr]  md:grid-rows-[1fr_min-content] justify-self-center py-20" style={{width: "min(1400px, 100%)"}}>
             {
                 filme.isLoading 
                     ? <div>Carregando...</div>

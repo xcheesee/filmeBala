@@ -1,7 +1,6 @@
 import { type NextPage } from "next";
 import Image from "next/image";
 import MovieSlider from "../components/movieSlider";
-import { env } from "../env/client.mjs";
 
 const Home: NextPage = () => {
 
@@ -22,7 +21,7 @@ const Home: NextPage = () => {
                     </div>
                 </div>
             </div>
-            <div className="bg-neutral-800 z-20">
+            <div className=" z-20 pb-20" style={{background: "inherit"}}>
                 <div className="flex justify-center relative overflow-hidden justify-self-center">
                     <MovieSlider
                         name='populares' 
