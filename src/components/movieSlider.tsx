@@ -24,7 +24,7 @@ const MovieSlider: React.FC<MSliderProps> = ({name, path}) => {
         }
     }
     return(
-        <div className="py-8 lg:px-4 overflow-hidden">
+        <div className="py-8 lg:px-4 overflow-hidden relative">
             <p className="capitalize">{name}</p>
             {isLoading
                 ? ""

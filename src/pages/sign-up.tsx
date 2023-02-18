@@ -51,17 +51,11 @@ const Signup: NextPage = () => {
                         onSubmit={async (e) => {
                             e.preventDefault()
                             const formData = Object.fromEntries(new FormData(e.currentTarget))  as unknown as SignUpForm
-                            if(formData.signup_password !== formData.signup_pw_confirm) {
+                            if(formData.password !== formData.pw_confirm) {
                                 console.log('senha difere!')
                                 return
                             }
-                            signUpMutation.mutate({
-                                name: formData.name,
-                                    surname: formData.surname,
-                                    username: formData.signup_username,
-                                    password: formData.signup_password,
-                                    age: +formData.age,
-                                }, {
+                            signUpMutation.mutate(formData, {
                                     onSuccess: () => setSignUpDialog(true),
                                     onError: () => setSignUpErrorDialog(true),
                                     
@@ -70,8 +64,8 @@ const Signup: NextPage = () => {
                     >
                         <p className="tracking-wider -ml-2 col-span-2">Ainda nao é usuario?</p>
                         <h1 className="tracking-wider font-bold text-xl -ml-2 col-span-2">Cadastre-se</h1>
-                        <Input name="signup_username" id="signup_username" label="Username" required className="col-span-2"/>
-                        <Input name="signup_password" id="signup_password" label="Password" type="password" required className="col-span-2"/>
+                        <Input name="username" id="signup_username" label="Username" required className="col-span-2"/>
+                        <Input name="password" id="signup_password" label="Password" type="password" required className="col-span-2"/>
                         <Input name="signup_pw_confirm" id="signup-pw-confirm" label="Confirm Password" type="password" className="col-span-2"/>
                         <Input name="name" id="name" label="Name" required/>
                         <Input name="surname" id="surname" label="Surname" required/>
@@ -111,13 +105,11 @@ const Signup: NextPage = () => {
     )
 }
 
-interface SignUpForm {
+interface SignUpForm extends LoginForm {
     name: string;
     surname: string;
-    signup_username: string;
-    signup_password: string;
-    signup_pw_confirm: string;
-    age: string;
+    pw_confirm: string;
+    age: number;
 
 }
 
