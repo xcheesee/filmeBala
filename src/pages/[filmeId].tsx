@@ -7,12 +7,16 @@ import { faThumbsUp, faStar, faThumbsDown } from '@fortawesome/free-solid-svg-ic
 import { useQuery } from "@tanstack/react-query";
 import { CARD_IMAGE_SIZE } from "../utils/constants";
 import { trpc } from "../utils/trpc";
+import { useSession } from "next-auth/react";
 
 const FilmePage: NextPage = () => {
     
     const router = useRouter()
     const filmeId = router.query.filmeId || 0
+    const session = useSession()
     const filme = trpc.filmes.getFilme.useQuery(+filmeId)
+    const comentarios = trpc.filme.getComms.useQuery(filmeId as string)
+    const commMutation = trpc.filme.sendComm.useMutation()
 
     return (
         <div className="grid md:grid-cols-[min(500px,100%)_1fr]  md:grid-rows-[1fr_min-content] justify-self-center py-20" style={{width: "min(1400px, 100%)"}}>
@@ -61,30 +65,49 @@ const FilmePage: NextPage = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="md:col-span-2 justify-self-center md:w-[720px] w-full">
+                        <form   
+                            className="md:col-span-2 justify-self-center md:w-[720px] w-full"
+                            onSubmit={(e) => {
+                                e.preventDefault()
+                                const formData = Object.fromEntries(new FormData(e.currentTarget)) as unknown as ComentarioForm
+                                if(formData.comentario?.length > 500) return
+                                if(!filme.data?.id || !session.data?.user?.id) return
+                                commMutation.mutate({
+                                    authorId: +session.data.user.id,
+                                    movieId: filme.data?.id,
+                                    comment: formData.comentario,
+                                })
+                            }}
+                        >
                             <div className="grid gap-4 p-4 my-4 bg-neutral-800 rounded shadow-[inset_-1px_1px_6px_#404040,-1px_1px_6px_#171717]">
-                                {/* {moviesComms[+filmeId!]?.length != 0 ? moviesComms[+filmeId!]?.map((entry) => {
+                                {!comentarios.isLoading ? comentarios.data?.map((entry: any, index: number) => {
                                     return(
-                                        <div className="grid grid-cols-[min-content_1fr] gap-x-4">
+                                        <div className="grid grid-cols-[min-content_1fr] gap-x-4" key={`comm-${filme.data?.id}-${index}`}>
                                             <div className="row-span-2 flex self-center h-[24px] w-[24px]">
                                                 <Image src="/user-64.png" alt="User Photo" width={24} height={24}/>
                                             </div>
                                             <div className="font-bold">
-                                                {entry.author}
+                                                {entry?.CommAuthor?.username}
                                             </div>
-                                            <div>{entry.text}</div>
+                                            <div>{entry.comment}</div>
                                         </div>
                                     )
-                                }) : <div> nenhum comentario a mostrar </div>} */}
-                                <textarea rows={4} name="comentario" placeholder="Deixe seu comentario" className="bg-neutral-700 rounded px-4 py-2"/>
-                                <button className="bg-stone-900 rounded py-2 px-4">Enviar</button>
+                                }) : <div className="text-center my-2"> nenhum comentario a exibir </div>}
+
+                                    <textarea rows={4} name="comentario" placeholder="Deixe seu comentario" className="bg-neutral-700 rounded px-4 py-2"/>
+                                    <button className="bg-stone-900 rounded py-2 px-4" onClick={(e) => {
+                                    }}>Enviar</button>
                             </div>
-                        </div>
+                        </form>
                     </>           
             }
 
         </div>
     )
+}
+
+interface ComentarioForm {
+    comentario: string
 }
 
 export default FilmePage

@@ -1,7 +1,9 @@
 import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
+import getServerSession  from "next-auth/next"
 
 import { type Context } from "./context";
+import { authOptions } from "../../pages/api/auth/[...nextauth]";
 
 const t = initTRPC.context<Context>().create({
   transformer: superjson,
@@ -21,14 +23,15 @@ export const publicProcedure = t.procedure;
  * Reusable middleware to ensure
  * users are logged in
  */
-const isAuthed = t.middleware(({ ctx, next }) => {
-  if (!ctx.session || !ctx.session.user) {
+const isAuthed = t.middleware(async ({ ctx, next }) => {
+  const session = await getServerSession(authOptions)
+  if (!session) {
     throw new TRPCError({ code: "UNAUTHORIZED" });
   }
   return next({
     ctx: {
       // infers the `session` as non-nullable
-      session: { ...ctx.session, user: ctx.session.user },
+      session: { ...session, user: session.user },
     },
   });
 });

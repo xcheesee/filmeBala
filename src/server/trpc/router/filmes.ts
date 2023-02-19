@@ -11,7 +11,6 @@ export const filmesRouter = router({
                     id: input
                 }
             })
-            console.log(filme)
             if (filme !== null) {
                 return filme
             } else {
@@ -31,5 +30,5 @@ export const filmesRouter = router({
                     }
                 })
             }
-        }) 
+        })
 })

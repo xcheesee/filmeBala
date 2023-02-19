@@ -77,14 +77,15 @@ model Genre {
 // }
 
 model Comment {
+  id Int @id @default(autoincrement())
   authorId Int
   movieId Int
+  comment String @db.VarChar(500)
   CommAuthor MdbUser? @relation(fields: [authorId], references: [id])
   CommedMovie Movie? @relation(fields: [movieId], references: [id])
 
   @@index(authorId)
   @@index(movieId)
-  @@id([authorId, movieId])
 }
 
 model MovieLike {

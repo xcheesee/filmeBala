@@ -11,7 +11,7 @@ import { trpc } from "../utils/trpc"
 
 const Signup: NextPage = () => {
     const signUpMutation = trpc.auth.signUp.useMutation()
-    const loginMutation = trpc.auth.login.useMutation()
+    // const loginMutation = trpc.auth.login.useMutation()
     const [signUpDialog, setSignUpDialog] = useState(false)
     const [signUpErrorDialog, setSignUpErrorDialog] = useState(false)
     const router = useRouter()
@@ -35,9 +35,9 @@ const Signup: NextPage = () => {
                             //     onSuccess: () => router.push("/")
                             // })
                             const res = await signIn("credentials", {
-                                redirect: false,
                                 username: formData.username,
-                                password: formData.password
+                                password: formData.password,
+                                callbackUrl: "/"
                             })
                         }}
                         >
@@ -63,7 +63,7 @@ const Signup: NextPage = () => {
                                 console.log('senha difere!')
                                 return
                             }
-                            signUpMutation.mutate(formData, {
+                            signUpMutation.mutate({...formData, age: +formData.age}, {
                                     onSuccess: () => setSignUpDialog(true),
                                     onError: () => setSignUpErrorDialog(true),
                                     
@@ -74,7 +74,7 @@ const Signup: NextPage = () => {
                         <h1 className="tracking-wider font-bold text-xl -ml-2 col-span-2">Cadastre-se</h1>
                         <Input name="username" id="signup_username" label="Username" required className="col-span-2"/>
                         <Input name="password" id="signup_password" label="Password" type="password" required className="col-span-2"/>
-                        <Input name="signup_pw_confirm" id="signup-pw-confirm" label="Confirm Password" type="password" className="col-span-2"/>
+                        <Input name="pw_confirm" id="signup-pw-confirm" label="Confirm Password" type="password" className="col-span-2"/>
                         <Input name="name" id="name" label="Name" required/>
                         <Input name="surname" id="surname" label="Surname" required/>
                         <Input name="age" id="age" label="Age" required className="col-span-2"/>

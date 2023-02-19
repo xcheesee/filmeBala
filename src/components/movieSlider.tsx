@@ -37,7 +37,7 @@ const MovieSlider: React.FC<MSliderProps> = ({name, path}) => {
                             return dispatch({type: 'end'})
                         }}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                            <path fillRule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
                         </svg>
                     </button>
                     <button 
@@ -48,7 +48,7 @@ const MovieSlider: React.FC<MSliderProps> = ({name, path}) => {
                             return dispatch({type: 'start'})
                         }}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                            <path fillRule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
                         </svg>
                     </button>
                 </>
@@ -56,8 +56,9 @@ const MovieSlider: React.FC<MSliderProps> = ({name, path}) => {
             <div className="h-[300px] grid grid-flow-col py-2 transition duration-500" style={{transform: `translateX(-${(CARD_IMAGE_SIZE) * slider.count}px)`, maxWidth: `${MAX_SLIDER_SIZE}px`}}>
                 {isLoading
                     ? <div className="justify-self-center self-center">Loading...</div>
-                    :data?.results?.map((entry: any) => 
+                    :data?.results?.map((entry: any, index: number) => 
                     <MovieCard 
+                        key={`mCard-${index}`}
                         name={entry.original_title} 
                         description={entry.overview} 
                         playtime="2h" 

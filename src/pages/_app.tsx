@@ -7,6 +7,7 @@ import { trpc } from "../utils/trpc";
 
 import "../styles/globals.css";
 import Layout from "../components/layout";
+import Auth from "../components/Auth";
 
 
 const MyApp: AppType<{ session: Session | null }> = ({
@@ -17,9 +18,11 @@ const MyApp: AppType<{ session: Session | null }> = ({
   return (
     <QueryClientProvider client={queryClient}>
       <SessionProvider session={session}>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
+        <Auth>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </Auth>
       </SessionProvider>
     </QueryClientProvider>
   );
