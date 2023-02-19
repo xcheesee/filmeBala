@@ -3,11 +3,13 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 // import { moviesComms } from "../server/db/filmeTempDb"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faThumbsUp, faStar, faThumbsDown } from '@fortawesome/free-solid-svg-icons'
-import { useQuery } from "@tanstack/react-query";
-import { CARD_IMAGE_SIZE } from "../utils/constants";
+import { faThumbsUp, faThumbsDown } from '@fortawesome/free-solid-svg-icons'
+
 import { trpc } from "../utils/trpc";
 import { useSession } from "next-auth/react";
+import Button from "../components/button";
+import { useState } from "react";
+import StarRating from "../components/starRating";
 
 const FilmePage: NextPage = () => {
     
@@ -51,17 +53,17 @@ const FilmePage: NextPage = () => {
             
                             </div>
                             <div className="flex justify-between w-[min(70ch,100%)] mt-auto pb-4 pr-4">
-                                <span className="text-yellow-500">
+                                {/* <span className="text-yellow-500">
                                     <FontAwesomeIcon icon={faStar} size="3x"/>
-                                </span>
-                                <div className="flex gap-4">
-                                    <span className="text-blue-500">
+                                </span> */}
+                                <div className="flex">
+                                    {/* <span className="text-blue-500">
                                         <FontAwesomeIcon icon={faThumbsUp} size="3x"/>
                                     </span>
                                     <span className="text-red-500 relative top-3">
                                         <FontAwesomeIcon icon={faThumbsDown} size="3x"/>
-                                    </span>
-            
+                                    </span> */}
+                                    <StarRating />
                                 </div>
                             </div>
                         </div>
@@ -94,9 +96,16 @@ const FilmePage: NextPage = () => {
                                     )
                                 }) : <div className="text-center my-2"> nenhum comentario a exibir </div>}
 
-                                    <textarea rows={4} name="comentario" placeholder="Deixe seu comentario" className="bg-neutral-700 rounded px-4 py-2"/>
-                                    <button className="bg-stone-900 rounded py-2 px-4" onClick={(e) => {
-                                    }}>Enviar</button>
+                                    <textarea 
+                                        rows={4} 
+                                        name="comentario" 
+                                        placeholder={session.status === "authenticated" ? "Deixe seu comentario" : "Voce precisa estar logado para comentar neste filme"} 
+                                        disabled={session.status === "unauthenticated"}
+                                        className="bg-neutral-700 rounded px-4 py-2"
+                                        />
+                                    <Button disabled={session.status === "unauthenticated"}>Enviar</Button>
+                                    {/* <button className="bg-stone-900 rounded py-2 px-4" onClick={(e) => {
+                                    }}>Enviar</button> */}
                             </div>
                         </form>
                     </>           

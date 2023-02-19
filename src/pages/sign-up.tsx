@@ -34,11 +34,12 @@ const Signup: NextPage = () => {
                             // loginMutation.mutate(formData, {
                             //     onSuccess: () => router.push("/")
                             // })
-                            const res = await signIn("credentials", {
+                            await signIn("credentials", {
+                                redirect: false,
                                 username: formData.username,
                                 password: formData.password,
-                                callbackUrl: "/"
                             })
+                            return router.back()
                         }}
                         >
                         <h1 className="tracking-wider font-bold text-3xl -ml-2">Login</h1>
