@@ -9,6 +9,14 @@ export const filmesRouter = router({
             const filme = await ctx.prisma.movie.findUnique({
                 where: {
                     id: input
+                },
+                include: {
+                    nativeRatings: true,
+                    _count: {
+                        select: {
+                            nativeRatings: true,
+                        }
+                    },
                 }
             })
             if (filme !== null) {
@@ -27,6 +35,14 @@ export const filmesRouter = router({
                         ratings: json.vote_average,
                         Status: json.status,
                         posterPath: json.poster_path,
+                    }, 
+                    include: {
+                        nativeRatings: true,
+                        _count: {
+                            select: {
+                                nativeRatings: true,
+                            }
+                        },
                     }
                 })
             }

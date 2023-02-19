@@ -19,6 +19,7 @@ const FilmePage: NextPage = () => {
     const filme = trpc.filmes.getFilme.useQuery(+filmeId)
     const comentarios = trpc.filme.getComms.useQuery(filmeId as string)
     const commMutation = trpc.filme.sendComm.useMutation()
+    const nativeRating = filme.data?.nativeRatings?.reduce((acc: number, val: NativeRating) => acc + val.rating, 0) / filme.data?._count.nativeRatings || 0
 
     return (
         <div className="grid md:grid-cols-[min(500px,100%)_1fr]  md:grid-rows-[1fr_min-content] justify-self-center py-20" style={{width: "min(1400px, 100%)"}}>
@@ -46,10 +47,10 @@ const FilmePage: NextPage = () => {
                                     <p className="font-bold color-neutral-500">Avaliacao IMDb:</p>
                                     {`${filme?.data?.ratings?.toFixed(1)}/10`}
                                 </div>
-                                {/* <div className="flex gap-2">
+                                <div className="flex gap-2">
                                     <p className="font-bold color-neutral-500">Avaliacao Filmin:</p>
-                                    {`${filmeDb[+filmeId!]?.rtRating}/10`}
-                                </div> */}
+                                    {`${nativeRating.toFixed(1)}/10`}
+                                </div>
             
                             </div>
                             <div className="flex justify-between w-[min(70ch,100%)] mt-auto pb-4 pr-4">
@@ -117,6 +118,10 @@ const FilmePage: NextPage = () => {
 
 interface ComentarioForm {
     comentario: string
+}
+
+interface NativeRating {
+    rating: number
 }
 
 export default FilmePage
