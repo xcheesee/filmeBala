@@ -18,6 +18,16 @@ div, p {
     animation-fill-mode: forwards;
 }
 
+:hover.sidebar {
+    animation: pull 1s;
+    animation-fill-mode: forwards;
+}
+
+:hover.sidebar * {
+    animation: offsetPull 1s;
+    animation-fill-mode: forwards;
+}
+
 .loader {
     margin: 0px auto;
     width: 25px;
@@ -66,6 +76,18 @@ div, p {
     }
     100% {
         background: rgba(38, 38, 38, 0.8);
+    }
+}
+
+@keyframes pull {
+    100% {
+        right: -3rem;
+    }
+}
+
+@keyframes offsetPull {
+    100% {
+        right: 1rem;
     }
 }
 

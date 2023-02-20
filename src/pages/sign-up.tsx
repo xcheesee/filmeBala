@@ -113,7 +113,7 @@ const Signup: NextPage = () => {
     )
 }
 
-export interface SignUpForm extends LoginForm {
+interface SignUpForm extends LoginForm {
     name: string;
     surname: string;
     pw_confirm: string;

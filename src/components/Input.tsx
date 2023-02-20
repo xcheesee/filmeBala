@@ -1,4 +1,4 @@
-const Input: React.FC<InputProps> = ({label, type, id, name, required, className}) => {
+const Input: React.FC<InputProps> = ({label, type, id, name, required, className, defaultValue="", disabled=false}) => {
     return(
         <div className={`flex flex-col gap-2 ${className}`}>
             <label htmlFor="password" className="-ml-2">
@@ -8,8 +8,10 @@ const Input: React.FC<InputProps> = ({label, type, id, name, required, className
                 id={id || ""} 
                 name={name || ""} 
                 type={type || ""} 
+                defaultValue={`${defaultValue}`}
                 className={`text-black px-2 py-1 rounded`}
                 required={required || false}
+                disabled={disabled}
                 autoComplete="off"
                 readOnly
                 onFocus={(e) => e.target.removeAttribute('readonly')}
@@ -25,6 +27,8 @@ type InputProps = {
     name?: string;
     required?: boolean;
     className?: string;
+    defaultValue?: string | number | null;
+    disabled?: boolean
 }
 
 export default Input

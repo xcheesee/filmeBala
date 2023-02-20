@@ -22,7 +22,18 @@ const Header: React.FC = () => {
             <ul className="list-none flex gap-8 items-center justify-content-center">
                 { session.status === "authenticated"
                     ?<>
-                        <li>{session.data.user?.name}</li>
+                        <Link href={"/profile"}>
+                            <li 
+                                className="font-bold text-lg"
+                                style={{
+                                    backgroundImage: GRADIENT_COLOR,
+                                    backgroundClip: "text",
+                                    WebkitTextFillColor: "transparent",
+                                }}
+                            >
+                                {session.data.user?.name}
+                            </li>
+                        </Link>
                         <Link href={"/api/auth/signout"}>
                             <li>Log out</li>    
                         </Link>
