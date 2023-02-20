@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import Button from "../components/button";
 import StarRating from "../components/starRating";
 import { useState } from "react";
+import CircularLoader from "../components/circularLoader";
 
 const FilmePage: NextPage = () => {
     
@@ -22,7 +23,11 @@ const FilmePage: NextPage = () => {
         }
     })
     const comentarios = trpc.filme.getComms.useQuery(filmeId as string)
-    const commMutation = trpc.filme.sendComm.useMutation()
+    const commMutation = trpc.filme.sendComm.useMutation({
+        onSuccess: () => {
+            comentarios.refetch()
+        }
+    })
     const watchLaterMutation = trpc.user.setWatchLater.useMutation({
         onSuccess: () => setAssistirDepoisFlag(true)
     })
@@ -63,10 +68,10 @@ const FilmePage: NextPage = () => {
                                 </div>
             
                             </div>
-                            <div className="flex justify-between w-[min(70ch,100%)] mt-auto pb-4 pr-4">
+                            <div className="grid grid-cols-[max-content_1fr] justify-items-center w-[min(70ch,100%)] mt-auto pb-4 pr-4">
                                 <span className="text-yellow-500">
                                     <button 
-                                        className={`${assistirDepoisFlag ? "bg-red-500" : "bg-blue-600"} text-white font-bold py-2 px-4 rounded-lg`}
+                                        className={`${assistirDepoisFlag ? "bg-red-500" : "bg-blue-600"} py-2 px-4 rounded-lg`}
                                         onClick={async () => {
                                             if(!filme.data?.id || !session.data?.user?.id) return
 
@@ -82,7 +87,14 @@ const FilmePage: NextPage = () => {
                                             })
                                         }}
                                         disabled={watchLaterMutation.isLoading || cancelWatchLaterMutation.isLoading}
-                                        >{assistirDepoisFlag ? "Remover Bookmark" :"Assistir mais tarde"}</button>
+                                        >
+                                            <div className="flex text-white font-bold gap-2">
+                                                {watchLaterMutation.isLoading || cancelWatchLaterMutation.isLoading
+                                                    ? <CircularLoader />
+                                                    : <div></div>}
+                                                {assistirDepoisFlag ? "Remover Bookmark" :"Assistir mais tarde"}
+                                            </div>
+                                            </button>
                                 </span>
                                 <div className="flex">
                                     <StarRating />
@@ -104,30 +116,44 @@ const FilmePage: NextPage = () => {
                             }}
                         >
                             <div className="grid gap-4 p-4 my-4 bg-neutral-800 rounded shadow-[inset_-1px_1px_6px_#404040,-1px_1px_6px_#171717]">
-                                {!comentarios.isLoading ? comentarios.data?.map((entry: any, index: number) => {
-                                    return(
-                                        <div className="grid grid-cols-[min-content_1fr] gap-x-4" key={`comm-${filme.data?.id}-${index}`}>
-                                            <div className="row-span-2 flex self-center h-[24px] w-[24px]">
-                                                <Image src="/user-64.png" alt="User Photo" width={24} height={24}/>
+                                {!comentarios.isLoading 
+                                    ?comentarios.data?.map((entry: any, index: number) => {
+                                        return(
+                                            <div className="grid grid-cols-[min-content_1fr] gap-x-4" key={`comm-${filme.data?.id}-${index}`}>
+                                                <div className="row-span-2 flex self-center h-[24px] w-[24px]">
+                                                    <Image src="/user-64.png" alt="User Photo" width={24} height={24}/>
+                                                </div>
+                                                <div className="font-bold">
+                                                    {entry?.CommAuthor?.username}
+                                                </div>
+                                                <div>{entry.comment}</div>
                                             </div>
-                                            <div className="font-bold">
-                                                {entry?.CommAuthor?.username}
-                                            </div>
-                                            <div>{entry.comment}</div>
-                                        </div>
-                                    )
-                                }) : <div className="text-center my-2"> nenhum comentario a exibir </div>}
+                                        )
+                                    }) 
+                                    : <div className="text-center my-2"> nenhum comentario a exibir </div>
+                                }
 
-                                    <textarea 
-                                        rows={4} 
-                                        name="comentario" 
-                                        placeholder={session.status === "authenticated" ? "Deixe seu comentario" : "Voce precisa estar logado para comentar neste filme"} 
-                                        disabled={session.status === "unauthenticated"}
-                                        className="bg-neutral-700 rounded px-4 py-2"
-                                        />
-                                    <Button disabled={session.status === "unauthenticated"}>Enviar</Button>
-                                    {/* <button className="bg-stone-900 rounded py-2 px-4" onClick={(e) => {
-                                    }}>Enviar</button> */}
+                                <textarea 
+                                    rows={4} 
+                                    name="comentario" 
+                                    placeholder={session.status === "authenticated" ? "Deixe seu comentario" : "Voce precisa estar logado para comentar neste filme"} 
+                                    disabled={session.status === "unauthenticated"}
+                                    className={`${session.status !== "authenticated" ? "cursor-not-allowed" : ""} bg-neutral-700 rounded px-4 py-2`}
+                                    />
+                                <Button 
+                                    disabled={session.status === "unauthenticated" || commMutation.isLoading}
+                                    className={`${session.status === "unauthenticated" || commMutation.isLoading ? "cursor-not-allowed" : ""}`}
+                                    >
+                                    <div className="flex justify-center gap-4">
+                                        {commMutation.isLoading
+                                            ?<div className="self-center">
+                                                <CircularLoader />
+                                            </div>
+                                            : <div></div>
+                                        }
+                                        <p className="text-neutral-700">Enviar</p>
+                                    </div>
+                                </Button>
                             </div>
                         </form>
                     </>           

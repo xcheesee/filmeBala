@@ -16,7 +16,6 @@ const Signup: NextPage = () => {
     const [signUpErrorDialog, setSignUpErrorDialog] = useState(false)
     const router = useRouter()
     const session = useSession()
-    console.log(session.status)
     return(
         <>
             <div className="w-3/6 bg-neutral-900 self-center justify-self-center rounded relative b-10" style={{
@@ -114,7 +113,7 @@ const Signup: NextPage = () => {
     )
 }
 
-interface SignUpForm extends LoginForm {
+export interface SignUpForm extends LoginForm {
     name: string;
     surname: string;
     pw_confirm: string;

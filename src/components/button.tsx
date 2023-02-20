@@ -6,7 +6,7 @@ const Button: React.FC<ButtonProps> = ({ type, children, onClick, className, dis
         <button 
             type={type}
             onClick={onClick}
-            className={`bg-blue-600 rounded font-bold tracking-wider py-2 px-4 mt-4 text-neutral-700 ${className}`}
+            className={`bg-blue-600 rounded font-bold tracking-wider py-2 px-4 text-neutral-700 ${className}`}
             style={{background: GRADIENT_COLOR}}
             disabled={disabled}
         >

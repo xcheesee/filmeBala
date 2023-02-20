@@ -17,15 +17,15 @@ const MovieCard: React.FC<McardProps> =  ({ name, playtime, description, ratings
                     <p className="h-full text-sm align-middle">{description}</p>
                 </div>
                 <p className="row-start-4">{ratings} <FontAwesomeIcon icon={faStar} /></p>
-                <div className="row-start-5 col-span-3 flex justify-between py-2">
+                <div className="row-start-5 col-span-3 flex justify-center py-2">
                     <Link href={`/${id}`}>
                         <button 
                             className='rounded bg-green-600 font-bold py-2 px-4 z-10'
                             onClick={() => {
                                 
-                            }}>Assistir</button>
+                            }}>Ver Pagina</button>
                     </Link>
-                    <button className='rounded bg-blue-600 font-bold py-2 px-4 z-10'>Favoritar</button>
+                    {/* <button className='rounded bg-blue-600 font-bold py-2 px-4 z-10'>Favoritar</button> */}
                 </div>
             </div>
         </div>

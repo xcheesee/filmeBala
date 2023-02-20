@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { trpc } from "../utils/trpc";
+import CircularLoader from "./circularLoader";
 
 const StarRating: React.FC = () => {
     const router = useRouter()
@@ -14,7 +15,7 @@ const StarRating: React.FC = () => {
     const filmeId: number | null = +router?.query?.filmeId || null
     const sessionId: number | null = +session?.data?.user?.id || null
     const ratingMutation = trpc.filme.sendRating.useMutation({onSuccess: (res) => {
-        utils.filme.getRating.invalidate()
+        ratingQuery.refetch()
         setStarCount(res.rating)
     }})
     const ratingQuery = trpc.filme.getRating.useQuery({authorId: sessionId, movieId: filmeId}, {
@@ -23,9 +24,9 @@ const StarRating: React.FC = () => {
         }
     })
 
-    if(ratingQuery.isLoading) {
+    if(ratingQuery.isLoading || ratingMutation.isLoading) {
         return(
-            <div>Loading...</div>
+            <div className="self-center"><CircularLoader color="white"/></div>
         )
     } else {
         return(
@@ -64,7 +65,6 @@ const StarRating: React.FC = () => {
                                         movieId: +router.query.filmeId || 0,
                                         rating: index + 1
                                     })
-                                    setStarCount(index + 1)
                                 }}
                             />
                         </span>

@@ -46,17 +46,17 @@ div, p {
     0% {
         stroke-dasharray: 1, 200;
         stroke-dashoffset: 0;
-        stroke: black;
+        /* stroke: black; */
     }
     50% {
         stroke-dasharray: 89, 200;
         stroke-dashoffset: -35;
-        stroke: black;
+        /* stroke: black; */
     }
     100% {
         stroke-dasharray: 89, 200;
         stroke-dashoffset: -124;
-        stroke: black;
+        /* stroke: black; */
     }
 }
 
