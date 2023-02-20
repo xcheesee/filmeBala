@@ -9,26 +9,25 @@ const StarRating: React.FC = () => {
     const router = useRouter()
     const session = useSession()
     const utils = trpc.useContext()
+    const [starCount, setStarCount] = useState(0)
+    const [isHovering, setIsHovering] = useState(false)
     const filmeId: number | null = +router?.query?.filmeId || null
     const sessionId: number | null = +session?.data?.user?.id || null
     const ratingMutation = trpc.filme.sendRating.useMutation({onSuccess: (res) => {
         utils.filme.getRating.invalidate()
         setStarCount(res.rating)
     }})
-    const ratingQuery = trpc.filme.getRating.useQuery({authorId: sessionId, movieId: filmeId})
-    const [starCount, setStarCount] = useState(0)
-    const [isHovering, setIsHovering] = useState(false)
+    const ratingQuery = trpc.filme.getRating.useQuery({authorId: sessionId, movieId: filmeId}, {
+        onSuccess: (res) => {
+            setStarCount(res?.rating || 0)
+        }
+    })
 
-    useEffect(() => {
-        setStarCount(ratingQuery.data?.rating || 0)
-    },[ratingQuery.isLoading])
-
-    if(ratingQuery.isFetching) {
+    if(ratingQuery.isLoading) {
         return(
             <div>Loading...</div>
         )
     } else {
-
         return(
             <div className="relative">
                 {session.status === "unauthenticated" 
@@ -48,7 +47,7 @@ const StarRating: React.FC = () => {
                 }
                 {[...Array(10)].map((el, index) => {
                     return (
-                        <span className={index >= starCount ? "text-white" : "text-yellow-500"}> 
+                        <span className={index >= starCount ? "text-white" : "text-yellow-500"} key={`star-${index}`}> 
                             <FontAwesomeIcon 
                                 icon={faStar} 
                                 size="2x" 

@@ -1,24 +1,34 @@
 import { type NextPage } from "next";
 import Image from "next/image";
 import { useRouter } from "next/router";
-// import { moviesComms } from "../server/db/filmeTempDb"
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faThumbsUp, faThumbsDown } from '@fortawesome/free-solid-svg-icons'
-
 import { trpc } from "../utils/trpc";
 import { useSession } from "next-auth/react";
 import Button from "../components/button";
-import { useState } from "react";
 import StarRating from "../components/starRating";
+import { useState } from "react";
 
 const FilmePage: NextPage = () => {
     
     const router = useRouter()
-    const filmeId = router.query.filmeId || 0
     const session = useSession()
-    const filme = trpc.filmes.getFilme.useQuery(+filmeId)
+
+    const [assistirDepoisFlag, setAssistirDepoisFlag] = useState(false)
+
+    const filmeId = router.query.filmeId || 0
+    const filme = trpc.filmes.getFilme.useQuery(+filmeId, {
+        onSuccess: (res) => {
+            if(res.userToWatch?.find(user => user.id === +session.data?.user?.id) !== undefined) 
+                return setAssistirDepoisFlag(true)
+        }
+    })
     const comentarios = trpc.filme.getComms.useQuery(filmeId as string)
     const commMutation = trpc.filme.sendComm.useMutation()
+    const watchLaterMutation = trpc.user.setWatchLater.useMutation({
+        onSuccess: () => setAssistirDepoisFlag(true)
+    })
+    const cancelWatchLaterMutation = trpc.user.removeWatchLater.useMutation({
+        onSuccess: () => setAssistirDepoisFlag(false)
+    })
     const nativeRating = filme.data?.nativeRatings?.reduce((acc: number, val: NativeRating) => acc + val.rating, 0) / filme.data?._count.nativeRatings || 0
 
     return (
@@ -44,7 +54,7 @@ const FilmePage: NextPage = () => {
                             </div>
                             <div className="flex gap-8">
                                 <div className="flex gap-2">
-                                    <p className="font-bold color-neutral-500">Avaliacao IMDb:</p>
+                                    <p className="font-bold color-neutral-500">Avaliacao TMDb:</p>
                                     {`${filme?.data?.ratings?.toFixed(1)}/10`}
                                 </div>
                                 <div className="flex gap-2">
@@ -54,16 +64,27 @@ const FilmePage: NextPage = () => {
             
                             </div>
                             <div className="flex justify-between w-[min(70ch,100%)] mt-auto pb-4 pr-4">
-                                {/* <span className="text-yellow-500">
-                                    <FontAwesomeIcon icon={faStar} size="3x"/>
-                                </span> */}
+                                <span className="text-yellow-500">
+                                    <button 
+                                        className={`${assistirDepoisFlag ? "bg-red-500" : "bg-blue-600"} text-white font-bold py-2 px-4 rounded-lg`}
+                                        onClick={async () => {
+                                            if(!filme.data?.id || !session.data?.user?.id) return
+
+                                            if(assistirDepoisFlag) 
+                                                return cancelWatchLaterMutation.mutate({
+                                                    movieId: +filmeId,
+                                                    userId: +session.data?.user?.id,
+                                                })
+                                            
+                                            return watchLaterMutation.mutate({
+                                                movieId: +filmeId,
+                                                userId: +session.data?.user?.id,
+                                            })
+                                        }}
+                                        disabled={watchLaterMutation.isLoading || cancelWatchLaterMutation.isLoading}
+                                        >{assistirDepoisFlag ? "Remover Bookmark" :"Assistir mais tarde"}</button>
+                                </span>
                                 <div className="flex">
-                                    {/* <span className="text-blue-500">
-                                        <FontAwesomeIcon icon={faThumbsUp} size="3x"/>
-                                    </span>
-                                    <span className="text-red-500 relative top-3">
-                                        <FontAwesomeIcon icon={faThumbsDown} size="3x"/>
-                                    </span> */}
                                     <StarRating />
                                 </div>
                             </div>

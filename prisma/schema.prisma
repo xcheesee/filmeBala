@@ -32,6 +32,7 @@ model MdbUser {
   comments Comment[]
   likes MovieLike[]
   ratings MovieRating[]
+  watchLater Movie[]
 }
 
 model Movie {
@@ -44,6 +45,7 @@ model Movie {
   runtime Int
   ratings Float
   Status String
+  userToWatch MdbUser[]
   nativeRatings MovieRating[]
   likes MovieLike[]
   comments Comment[]

@@ -37,22 +37,6 @@ export const filmeRouter = router({
             rating: z.number()
         }))
         .mutation(async ({ctx, input}) => {
-
-            // const res = await ctx.prisma.movieRating.findMany({
-            //     where: {
-            //          authorId: input.authorId,
-            //          movieId: input.movieId
-            //     }
-            // })
-            // if(res === null) {
-            //     return await ctx.prisma.movieRating.create({
-            //         data: {
-            //             authorId: input.authorId,
-            //             movieId: input.movieId,
-            //             rating: input.rating,
-            //         }
-            //     })
-            // }
             return await ctx.prisma.movieRating.upsert({
                 where: {
                     authorId_movieId: {
@@ -86,5 +70,4 @@ export const filmeRouter = router({
                 }
             })
         })
-
 })

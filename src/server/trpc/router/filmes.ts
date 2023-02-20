@@ -17,6 +17,7 @@ export const filmesRouter = router({
                             nativeRatings: true,
                         }
                     },
+                    userToWatch: true
                 }
             })
             if (filme !== null) {
@@ -43,6 +44,7 @@ export const filmesRouter = router({
                                 nativeRatings: true,
                             }
                         },
+                        userToWatch: true
                     }
                 })
             }
