@@ -56,7 +56,7 @@ const FilmePage: NextPage = () => {
                                         alt="movie banner"
                                         width={500}
                                         height={300}
-                                        loader={({ src, width, quality }) => {
+                                        loader={({ src }) => {
                                             return `https://image.tmdb.org/t/p/w500${src}`
                                         }}
                                     />

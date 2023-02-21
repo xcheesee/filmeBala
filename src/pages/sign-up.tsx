@@ -1,5 +1,5 @@
 import { type NextPage } from "next"
-import { signIn, useSession } from "next-auth/react"
+import { signIn } from "next-auth/react"
 import { useRouter } from "next/router"
 import { useState } from "react"
 import Button from "../components/button"
