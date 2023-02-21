@@ -7,6 +7,16 @@
 
 /** @type {import("next").NextConfig} */
 const config = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "image.tmdb.org",
+        port: "",
+        pathname: "/t/p/w**"
+      },
+    ],
+  },
   reactStrictMode: true,
   swcMinify: true,
   i18n: {

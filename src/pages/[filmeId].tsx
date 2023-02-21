@@ -7,7 +7,7 @@ import Button from "../components/button";
 import StarRating from "../components/starRating";
 import { useState } from "react";
 import CircularLoader from "../components/circularLoader";
-import { MovieRating } from "@prisma/client";
+import { Comment, MdbUser, type MovieRating } from "@prisma/client";
 
 const FilmePage: NextPage = () => {
     
@@ -47,9 +47,18 @@ const FilmePage: NextPage = () => {
                     :<>
                         <div className="">
                             <div className="h-full lg:p-8" style={{width: "min(500px, 100%)"}}>
-                                <img src={`https://image.tmdb.org/t/p/w500${filme?.data?.posterPath}`}
+                                {/* <img src={`https://image.tmdb.org/t/p/w500${filme?.data?.posterPath}`}
                                     alt="Movie banner" 
                                     className="object-cover"
+                                    /> */}
+                                    <Image 
+                                        src={filme?.data?.posterPath || ""} 
+                                        alt="movie banner"
+                                        width={500}
+                                        height={300}
+                                        loader={({ src, width, quality }) => {
+                                            return `https://image.tmdb.org/t/p/w500${src}`
+                                        }}
                                     />
                             </div>
                         </div>
@@ -120,7 +129,7 @@ const FilmePage: NextPage = () => {
                         >
                             <div className="grid gap-4 p-4 my-4 bg-neutral-800 rounded shadow-[inset_-1px_1px_6px_#404040,-1px_1px_6px_#171717]">
                                 {!comentarios.isLoading 
-                                    ?comentarios.data?.map((entry: any, index: number) => {
+                                    ?comentarios.data?.map((entry: Comentario, index: number) => {
                                         return(
                                             <div className="grid grid-cols-[min-content_1fr] gap-x-4" key={`comm-${filme.data?.id}-${index}`}>
                                                 <div className="row-span-2 flex self-center h-[24px] w-[24px]">
@@ -168,6 +177,10 @@ const FilmePage: NextPage = () => {
 
 interface ComentarioForm {
     comentario: string
+}
+
+interface Comentario extends Comment {
+    CommAuthor: MdbUser | null;
 }
 
 interface NativeRating {

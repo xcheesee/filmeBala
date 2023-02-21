@@ -1,4 +1,4 @@
-import { number, z } from "zod";
+import { z } from "zod";
 import { protectedProcedure, publicProcedure, router } from "../trpc";
 
 export const filmeRouter = router({
@@ -21,7 +21,7 @@ export const filmeRouter = router({
             comment: z.string()
         }))
         .mutation(async ({ctx, input}) => {
-            const comm = await ctx.prisma.comment.create({
+            await ctx.prisma.comment.create({
                 data: {
                     authorId: input.authorId,
                     movieId: input.movieId,

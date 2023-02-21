@@ -2,11 +2,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar} from '@fortawesome/free-solid-svg-icons'
 import { CARD_IMAGE_SIZE } from '../utils/constants'
 import Link from 'next/link'
+import Image from 'next/image'
 
 const MovieCard: React.FC<McardProps> =  ({ name, playtime, description, ratings, id, image }) => {
     return (
         <div className="h-full box-border px-[25px] relative overflow-hidden flex-none" style={{width: `${CARD_IMAGE_SIZE}px`}}>
-            <img src={`https://image.tmdb.org/t/p/w${CARD_IMAGE_SIZE - 50}${image}`} className='absolute'/>
+            <Image src={`https://image.tmdb.org/t/p/w200${image}`} className='absolute' alt="movie banner" width={200} height={300}
+                loader={(src) => `https://image.tmdb.org/t/p/w200${image}`}
+            />
             <div className="mt-auto relative w-full h-full translate-y-[80%] 
             hover:translate-y-[0%] transition bg-neutral-800 relative rounded
             duration-1000 mCard grid grid-cols-3 grid-rows-[min-content_min-content_1fr_min-content]">

@@ -4,12 +4,12 @@ import { CARD_IMAGE_SIZE, MAX_SLIDER_SIZE } from "../utils/constants";
 import MovieCard from "./movieCard";
 
 const MovieSlider: React.FC<MSliderProps> = ({name, path}) => {
-    const { isLoading, error, data } = useQuery([`${name}Data`], async () => await ( await fetch(path)).json())
+    const { isLoading, data } = useQuery([`${name}Data`], async () => await ( await fetch(path)).json())
     const [slider, dispatch] = useReducer(reducer, {count: 0})
     function getSliderResetCondition (dataSize:number , containerSize: number, cardSize: number): number {
         return dataSize - (containerSize / cardSize)
     }
-    function reducer (state: any, action: any) {
+    function reducer (state: {count: number}, action: {type: string}) {
         switch (action.type) {
             case 'increment':
                 return {count: state.count + 1}
@@ -56,7 +56,7 @@ const MovieSlider: React.FC<MSliderProps> = ({name, path}) => {
             <div className="h-[300px] grid grid-flow-col py-2 transition duration-500" style={{transform: `translateX(-${(CARD_IMAGE_SIZE) * slider.count}px)`, maxWidth: `${MAX_SLIDER_SIZE}px`}}>
                 {isLoading
                     ? <div className="justify-self-center self-center">Loading...</div>
-                    :data?.results?.map((entry: any, index: number) => 
+                    :data?.results?.map((entry: MovieData, index: number) => 
                     <MovieCard 
                         key={`mCard-${index}`}
                         name={entry.original_title} 
@@ -71,6 +71,14 @@ const MovieSlider: React.FC<MSliderProps> = ({name, path}) => {
             </div>
         </div>
     )
+}
+
+interface MovieData {
+    original_title: string,
+    overview: string,
+    vote_average: number,
+    poster_path: string,
+    id: number
 }
 
 type MSliderProps = {

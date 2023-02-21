@@ -1,5 +1,6 @@
 import { type NextPage } from "next"
 import { useSession } from "next-auth/react"
+import Image from "next/image"
 import { useRouter } from "next/router"
 import { useState } from "react"
 import Button from "../components/button"
@@ -81,11 +82,19 @@ const Profile: NextPage = () => {
                             index={1} 
                             tabHeader="A Assistir"
                         >
-                            {userData.data?.watchLater?.map((ele) => {
+                            {userData.data?.watchLater?.map((ele, index) => {
                                 return (
-                                <div className="flex justify-around gap-4 px-4 py-8">
+                                <div className="flex justify-around gap-4 px-4 py-8" key={`movie_to_watch_${index}`}>
                                     <div className="flex">
-                                        <img src={`https://image.tmdb.org/t/p/w200${ele.posterPath}`} className=''/>
+                                    <Image 
+                                        src={ele.posterPath} 
+                                        alt="movie banner"
+                                        width={200}
+                                        height={300}
+                                        loader={({ src, width, quality }) => {
+                                            return `https://image.tmdb.org/t/p/w200${src}`
+                                        }}
+                                    />
                                         <div className="self-center px-8">
                                             <p className="font-bold text-3xl">{ele.title}</p>
                                             <p className="pt-4">{ele.ratings.toFixed(1)}/10</p>

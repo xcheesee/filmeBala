@@ -33,8 +33,8 @@ export const authRouter = router({
         })
       }
       const salt = bcrypt.genSaltSync(10)
-      var hash = bcrypt.hashSync(password, salt);
-      const res = await ctx.prisma.mdbUser.create({
+      const hash = bcrypt.hashSync(password, salt);
+      await ctx.prisma.mdbUser.create({
         data: {
           username: username,
           pwHash: hash,
@@ -43,5 +43,6 @@ export const authRouter = router({
           age: age,
         }
       })
+      return
     }),
 });

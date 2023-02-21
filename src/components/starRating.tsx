@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faStar } from "@fortawesome/free-solid-svg-icons";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { trpc } from "../utils/trpc";
@@ -9,7 +9,6 @@ import CircularLoader from "./circularLoader";
 const StarRating: React.FC = () => {
     const router = useRouter()
     const session = useSession()
-    const utils = trpc.useContext()
     const [starCount, setStarCount] = useState(0)
     const [isHovering, setIsHovering] = useState(false)
     const filmeId: number | null = router?.query?.filmeId === undefined ? null : +router?.query?.filmeId

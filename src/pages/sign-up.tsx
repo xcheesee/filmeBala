@@ -1,4 +1,4 @@
-import { NextPage } from "next"
+import { type NextPage } from "next"
 import { signIn, useSession } from "next-auth/react"
 import { useRouter } from "next/router"
 import { useState } from "react"
@@ -15,7 +15,6 @@ const Signup: NextPage = () => {
     const [signUpDialog, setSignUpDialog] = useState(false)
     const [signUpErrorDialog, setSignUpErrorDialog] = useState(false)
     const router = useRouter()
-    const session = useSession()
     return(
         <>
             <div className="w-3/6 bg-neutral-900 self-center justify-self-center rounded relative b-10" style={{
