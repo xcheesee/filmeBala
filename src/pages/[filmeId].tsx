@@ -7,6 +7,7 @@ import Button from "../components/button";
 import StarRating from "../components/starRating";
 import { useState } from "react";
 import CircularLoader from "../components/circularLoader";
+import { MovieRating } from "@prisma/client";
 
 const FilmePage: NextPage = () => {
     
@@ -14,11 +15,11 @@ const FilmePage: NextPage = () => {
     const session = useSession()
 
     const [assistirDepoisFlag, setAssistirDepoisFlag] = useState(false)
-
+    const sessionId: number | null = session?.data?.user?.id === undefined ? null : +session?.data?.user?.id
     const filmeId = router.query.filmeId || 0
     const filme = trpc.filmes.getFilme.useQuery(+filmeId, {
         onSuccess: (res) => {
-            if(res.userToWatch?.find(user => user.id === +session.data?.user?.id) !== undefined) 
+            if(res.userToWatch?.find(user => user.id === sessionId) !== undefined) 
                 return setAssistirDepoisFlag(true)
         }
     })
@@ -34,7 +35,9 @@ const FilmePage: NextPage = () => {
     const cancelWatchLaterMutation = trpc.user.removeWatchLater.useMutation({
         onSuccess: () => setAssistirDepoisFlag(false)
     })
-    const nativeRating = filme.data?.nativeRatings?.reduce((acc: number, val: NativeRating) => acc + val.rating, 0) / filme.data?._count.nativeRatings || 0
+    const nativeRatings: MovieRating[] | null = filme.data?.nativeRatings === undefined ? null :  filme.data?.nativeRatings
+    const ratingsCount: number = filme.data?._count.nativeRatings === undefined ? 1 : filme.data?._count.nativeRatings
+    const nativeRating: number | null = nativeRatings === null ? null : nativeRatings.reduce((acc: number, val: NativeRating) => acc + val.rating, 0) / ratingsCount
 
     return (
         <div className="grid md:grid-cols-[min(500px,100%)_1fr]  md:grid-rows-[1fr_min-content] justify-self-center py-20" style={{width: "min(1400px, 100%)"}}>
@@ -64,7 +67,7 @@ const FilmePage: NextPage = () => {
                                 </div>
                                 <div className="flex gap-2">
                                     <p className="font-bold color-neutral-500">Avaliacao Filmin:</p>
-                                    {`${nativeRating.toFixed(1)}/10`}
+                                    {`${nativeRating? nativeRating.toFixed(1) : 0}/10`}
                                 </div>
             
                             </div>
