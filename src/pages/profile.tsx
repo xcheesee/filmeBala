@@ -8,15 +8,14 @@ import Input from "../components/Input"
 import RedirectUnauth from "../components/redirectUnauth"
 import SidebarElement from "../components/sidebarElement"
 import TabElement from "../components/tabElement"
-import { CARD_IMAGE_SIZE } from "../utils/constants"
 import { trpc } from "../utils/trpc"
 
 const Profile: NextPage = () => {
     const [selectedTab, setSelectedTab] = useState(0)
     const session = useSession()
     const router = useRouter()
-    const userId = session.data?.user?.id === undefined ? null : +session.data?.user?.id
-    const userData = trpc.user.getUser.useQuery(+userId)
+    const userId: number | null = session.data?.user?.id === undefined ? null : +session.data?.user?.id
+    const userData = trpc.user.getUser.useQuery(userId)
     const editUser = trpc.user.editInfo.useMutation()
     return(
         <RedirectUnauth>

@@ -1,7 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar} from '@fortawesome/free-solid-svg-icons'
 import { CARD_IMAGE_SIZE } from '../utils/constants'
-import { env } from '../env/server.mjs'
 import Link from 'next/link'
 
 const MovieCard: React.FC<McardProps> =  ({ name, playtime, description, ratings, id, image }) => {
@@ -25,7 +24,6 @@ const MovieCard: React.FC<McardProps> =  ({ name, playtime, description, ratings
                                 
                             }}>Ver Pagina</button>
                     </Link>
-                    {/* <button className='rounded bg-blue-600 font-bold py-2 px-4 z-10'>Favoritar</button> */}
                 </div>
             </div>
         </div>

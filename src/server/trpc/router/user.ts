@@ -15,7 +15,6 @@ export const userRouter = router({
                 },
                 data: {
                     watchLater: {
-                        // set: [{id: input.movieId}],
                         connect: {id: input.movieId}
                     }
                 },

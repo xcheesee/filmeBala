@@ -12,8 +12,8 @@ const StarRating: React.FC = () => {
     const utils = trpc.useContext()
     const [starCount, setStarCount] = useState(0)
     const [isHovering, setIsHovering] = useState(false)
-    const filmeId: number | null = +router?.query?.filmeId || null
-    const sessionId: number | null = +session?.data?.user?.id || null
+    const filmeId: number | null = router?.query?.filmeId === undefined ? null : +router?.query?.filmeId
+    const sessionId: number | null = session?.data?.user?.id === undefined ? null : +session?.data?.user?.id
     const ratingMutation = trpc.filme.sendRating.useMutation({onSuccess: (res) => {
         ratingQuery.refetch()
         setStarCount(res.rating)

@@ -44,27 +44,4 @@ export const authRouter = router({
         }
       })
     }),
-  // login: publicProcedure
-  //   .input(z.object({
-  //     username: z.string(),
-  //     password: z.string(),
-  //   }))
-  //   .mutation( async ({ ctx, input}) => {
-  //     const { username, password } = input
-  //     const userData = await ctx.prisma.mdbUser.findUnique({
-  //       where: {
-  //         username: username
-  //       }
-  //     })
-  //     if(userData === null) throw new TRPCError({
-  //       code: "NOT_FOUND",
-  //       message: "Usuario nao encontrado!"
-  //     })
-  //     const isValid = bcrypt.compareSync(password, userData.pwHash)
-  //     if(isValid) return isValid
-  //     else throw new TRPCError({
-  //       code: "UNAUTHORIZED",
-  //       message: "Senha Incorreta"
-  //     })
-  //   })
 });
