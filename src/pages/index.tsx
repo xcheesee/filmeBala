@@ -25,17 +25,17 @@ const Home: NextPage = () => {
                 <div className="flex justify-center relative overflow-hidden justify-self-center">
                     <MovieSlider
                         name='populares' 
-                        path='http://localhost:3000/api/movies/populares'/>
+                        path='http://filme-bala.vercel.app/api/movies/populares'/>
                 </div>
                 <div className="flex justify-center relative overflow-hidden justify-self-center">
                     <MovieSlider 
                         name='acao' 
-                        path='http://localhost:3000/api/movies/populares?genre=28'/>
+                        path='http://filme-bala.vercel.app/api/movies/populares?genre=28'/>
                 </div>
                 <div className="flex justify-center relative overflow-hidden justify-self-center">
                     <MovieSlider
                         name='comedia'
-                        path='http://localhost:3000/api/movies/populares?genre=35' />
+                        path='http://filme-bala.vercel.app/api/movies/populares?genre=35' />
                 </div>
 
             </div>
