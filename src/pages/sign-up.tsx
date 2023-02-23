@@ -11,9 +11,12 @@ import { trpc } from "../utils/trpc"
 
 const Signup: NextPage = () => {
     const signUpMutation = trpc.auth.signUp.useMutation()
-    // const loginMutation = trpc.auth.login.useMutation()
     const [signUpDialog, setSignUpDialog] = useState(false)
     const [signUpErrorDialog, setSignUpErrorDialog] = useState(false)
+    const [notSamePw, setNotSamePw] = useState({
+        triggered: false,
+        message: "Senhas Diferentes!"
+    })
     const router = useRouter()
     return(
         <>
@@ -29,9 +32,6 @@ const Signup: NextPage = () => {
                         onSubmit={async (e) => {
                             e.preventDefault()
                             const formData = Object.fromEntries(new FormData(e.currentTarget)) as unknown as LoginForm
-                            // loginMutation.mutate(formData, {
-                            //     onSuccess: () => router.push("/")
-                            // })
                             await signIn("credentials", {
                                 redirect: false,
                                 username: formData.username,
@@ -56,14 +56,19 @@ const Signup: NextPage = () => {
                         id="signup-form"
                         autoComplete="off"
                         onSubmit={async (e) => {
+                            const form: HTMLFormElement = e.target as HTMLFormElement
                             e.preventDefault()
+                            setNotSamePw(prev => ({...prev, triggered: false}))
                             const formData = Object.fromEntries(new FormData(e.currentTarget))  as unknown as SignUpForm
                             if(formData.password !== formData.pw_confirm) {
-                                console.log('senha difere!')
+                                setNotSamePw( prev => ({...prev,triggered: true,}) )
                                 return
                             }
                             signUpMutation.mutate({...formData, age: +formData.age}, {
-                                    onSuccess: () => setSignUpDialog(true),
+                                    onSuccess: () => {
+                                        setSignUpDialog(true)
+                                        form.reset()
+                                    },
                                     onError: () => setSignUpErrorDialog(true),
                                     
                                 })
@@ -72,15 +77,53 @@ const Signup: NextPage = () => {
                         <p className="tracking-wider -ml-2 col-span-2">Ainda nao é usuario?</p>
                         <h1 className="tracking-wider font-bold text-xl -ml-2 col-span-2">Cadastre-se</h1>
                         <Input name="username" id="signup_username" label="Username" required className="col-span-2"/>
-                        <Input name="password" id="signup_password" label="Password" type="password" required className="col-span-2"/>
-                        <Input name="pw_confirm" id="signup-pw-confirm" label="Confirm Password" type="password" className="col-span-2"/>
-                        <Input name="name" id="name" label="Name" required/>
-                        <Input name="surname" id="surname" label="Surname" required/>
-                        <Input name="age" id="age" label="Age" required className="col-span-2"/>
+                        <div  className="flex flex-col col-span-2">
+                            <Input name="password" id="signup_password" label="Password" type="password" required/>
+                            <p className="text-sm font-bold">Sua senha deve conter pelo menos 1 dos seguintes:</p>
+                                <div className="pl-2 text-sm flex flex-col gap-2">
+                                    <p>Jogador do elenco atual do Palmeiras (Troque espacos por "_")</p>
+                                    <p>Animal preferido no Jogo do bixo</p>
+                                    <p>Ano do rebaixamento do corinthias</p>
+                                    <p>Numero do candidato pelo qual voce votou para presidencia</p>
+                                </div>
+                        </div>
+                        <Input 
+                            name="pw_confirm" 
+                            id="signup-pw-confirm" 
+                            label="Confirm Password" 
+                            type="password" 
+                            className="col-span-2" 
+                            required
+                            error={notSamePw}
+                        />
+                        <Input 
+                            name="name" 
+                            id="name" 
+                            label="Name" 
+                            required
+                        />
+                        <Input 
+                            name="surname" 
+                            id="surname" 
+                            label="Surname" 
+                            required
+                        />
+                        <Input 
+                            name="age" 
+                            id="age" 
+                            label="Age" 
+                            className="col-span-2"
+                            required 
+                        />
                         <div className="flex justify-end col-start-2">
                             <Button type="submit">
-                                <div className="text-neutral-700 flex gap-2 content-center">{signUpMutation.isLoading
-                                ?<CircularLoader/> : <></>}Sign Up</div>
+                                <div className="text-neutral-700 flex gap-2 content-center">
+                                    {signUpMutation.isLoading
+                                        ?<CircularLoader/> 
+                                        : <></>
+                                    }
+                                    Sign Up
+                                </div>
                             </Button>
                         </div>
                     </form>
@@ -90,9 +133,7 @@ const Signup: NextPage = () => {
                 <div className="font-bold place-content-start text-3xl text-neutral-700">Conta criada com sucesso!</div>
                 <div className="self-center justify-self-center text-neutral-700 my-4">Retorne a pagina e faca seu login</div>
                 <div className="justify-self-end">
-                    <Button
-                        onClick={() => setSignUpDialog(false)}
-                    >
+                    <Button onClick={() => setSignUpDialog(false)}>
                         Ok
                     </Button>
                 </div>
@@ -101,9 +142,7 @@ const Signup: NextPage = () => {
                 <div className="font-bold place-content-start text-3xl text-neutral-700">Erro!</div>
                 <div className="self-center justify-self-center text-neutral-700 my-4">{signUpMutation.error?.message}</div>
                 <div className="justify-self-end">
-                    <Button
-                        onClick={() => setSignUpErrorDialog(false)}
-                    >
+                    <Button onClick={() => setSignUpErrorDialog(false)}>
                         Ok
                     </Button>
                 </div>
