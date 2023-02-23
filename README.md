@@ -1,4 +1,4 @@
-Live Preview @ https://filme-bala.vercel.app/
+**Live Preview** @ https://filme-bala.vercel.app/
 
 # Overview
 
@@ -15,7 +15,7 @@ Banco de Dados: MySQL(PlanetScale)
 
 # Objetivos
 Praticar a linguagem TypeScript, o framework Next.js e as ferramentas Prisma, trpc e PlanetScale. Aprender sobre Session Managment e suas "best practices". Estudar a estrutura de uma aplicacao fullstack, seu banco de dados, api endpoints, page layout, ux, e a comunicacao entre esses modulos.
- 
+
 # Create T3 App
 
 This is an app bootstrapped according to the [init.tips](https://init.tips) stack, also known as the T3-Stack.
