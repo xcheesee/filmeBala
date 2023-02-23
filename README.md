@@ -1,3 +1,21 @@
+Live Preview @ https://filme-bala.vercel.app/
+
+# Overview
+
+Web page agregadora de filmes, que mostra informacoes gerais de filmes, avaliacoes e comentarios deixados por outros usuarios. Permite criacao de conta para a realizacao de avaliacoes, comentarios e definicao de filmes a assistir depois.
+
+# Stack
+FrontEnd: React, TypeScript
+
+BackEnd: Next.js, TypeScript
+
+ORM: Prisma
+
+Banco de Dados: MySQL(PlanetScale)
+
+# Objetivos
+Praticar a linguagem TypeScript, o framework Next.js e as ferramentas Prisma, trpc e PlanetScale. Aprender sobre Session Managment e suas "best practices". Estudar a estrutura de uma aplicacao fullstack, seu banco de dados, api endpoints, page layout, ux, e a comunicacao entre esses modulos.
+ 
 # Create T3 App
 
 This is an app bootstrapped according to the [init.tips](https://init.tips) stack, also known as the T3-Stack.
