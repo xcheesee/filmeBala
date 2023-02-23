@@ -62,7 +62,7 @@ export const authRouter = router({
       }
       const salt = bcrypt.genSaltSync(10)
       const hash = bcrypt.hashSync(password, salt);
-      return "pog"
+      // return "pog"
       await ctx.prisma.mdbUser.create({
         data: {
           username: username,
