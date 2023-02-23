@@ -81,7 +81,7 @@ const Signup: NextPage = () => {
                             <Input name="password" id="signup_password" label="Password" type="password" required/>
                             <p className="text-sm font-bold">Sua senha deve conter pelo menos 1 dos seguintes:</p>
                                 <div className="pl-2 text-sm flex flex-col gap-2">
-                                    <p>Jogador do elenco atual do Palmeiras (Troque espacos por "_")</p>
+                                    <p>Jogador do elenco atual do Palmeiras (Troque espacos por _)</p>
                                     <p>Animal preferido no Jogo do bixo</p>
                                     <p>Ano do rebaixamento do corinthias</p>
                                     <p>Numero do candidato pelo qual voce votou para presidencia</p>
