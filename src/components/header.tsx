@@ -9,30 +9,15 @@ const Header: React.FC = () => {
     const session = useSession()
     const router = useRouter()
     return (
-        <div className="flex justify-between pl-4 pr-8 py-4 max-w-[100vw] shadow-lg fixed min-w-full z-30 bg-neutral-800">
+        <div className="flex justify-between pl-4 pr-8 py-4 max-w-[100vw] shadow-lg fixed min-w-full z-30 bg-neutral-800 ">
             <Link href={"/"}>
-                <h1 
-                    className="font-bold text-3xl" 
-                    style={{
-                        backgroundImage: GRADIENT_COLOR,
-                        backgroundClip: "text",
-                        WebkitTextFillColor: "transparent",
-                    }}>Filmin</h1>
+                <h1 className="font-bold text-3xl gradient_text"> Filmin </h1>
             </Link>
             <ul className="list-none flex gap-8 items-center justify-content-center">
                 { session.status === "authenticated"
                     ?<>
                         <Link href={"/profile"}>
-                            <li 
-                                className="font-bold text-lg"
-                                style={{
-                                    backgroundImage: GRADIENT_COLOR,
-                                    backgroundClip: "text",
-                                    WebkitTextFillColor: "transparent",
-                                }}
-                            >
-                                {session.data.user?.name}
-                            </li>
+                            <li className="font-bold text-lg gradient_text"> {session.data.user?.name} </li>
                         </Link>
                         <Link href={"/api/auth/signout"}>
                             <li>Log out</li>    

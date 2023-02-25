@@ -58,11 +58,12 @@ const FilmePage: NextPage = () => {
                             />
                         </div>
                         <div className="flex">
-                            <div className="relative z-20 w-[230px] h-[350px] rounded border-2 border-neutral-900 shadow-xl" style={{transform: "translate(50%, -50%)"}}>
+                            <div className="relative z-20 w-[230px] h-[350px] rounded-xl border-4 border-neutral-900 shadow-xl" style={{transform: "translate(50%, -50%)"}}>
                                     <Image 
                                         src={filme?.data?.posterPath || ""} 
                                         alt="movie banner"
                                         fill={true}
+                                        className="rounded"
                                         loader={({ src }) => {
                                             return `https://image.tmdb.org/t/p/w500${src}`
                                         }}
@@ -74,16 +75,16 @@ const FilmePage: NextPage = () => {
                                     <div className="font-light text-5xl tracking-wider">
                                         {filme?.data?.title}
                                     </div>
-                                    <div className="font-light text-3xl" style={{color: "rgba(255, 255, 255, 0.5)"}}>
+                                    <div className="font-light text-3xl" style={{color: "rgba(255, 255, 255, 0.4)"}}>
                                         {filme?.data?.tagline}
                                     </div>
                                     <div className="flex flex-col gap-2 pt-2">
-                                        <div className="flex gap-2" style={{color: "rgba(255, 255, 255, 0.5)"}}>
-                                        <p className="font-bold" style={{color: "rgba(255, 255, 255, 0.5)"}}>Avaliacao TMDb:</p>
+                                        <div className="flex gap-2" style={{color: "rgba(255, 255, 255, 0.4)"}}>
+                                        <p className="font-bold" style={{color: "rgba(255, 255, 255, 0.4)"}}>TMDb:</p>
                                         {`${filme?.data?.ratings?.toFixed(1)}/10`}
                                         </div>
-                                        <div className="flex gap-2" style={{color: "rgba(255, 255, 255, 0.5)"}}>
-                                            <p className="font-bold" style={{color: "rgba(255, 255, 255, 0.5)"}}>Avaliacao Filmin:</p>
+                                        <div className="flex gap-2" style={{color: "rgba(255, 255, 255, 0.4)"}}>
+                                            <p className="font-bold" style={{color: "rgba(255, 255, 255, 0.4)"}}>Filmin:</p>
                                             {`${nativeRating? nativeRating.toFixed(1) : 0}/10`}
                                         </div>
                                     </div>
@@ -93,7 +94,7 @@ const FilmePage: NextPage = () => {
                                         <StarRating />
                                     </div>
                                 </div>
-                                <div className="max-w-[140ch] self-center justify-self-center text-xl col-span-2">
+                                <div className="max-w-[120ch] self-center justify-self-center text-xl col-span-2 leading-loose">
                                     {filme?.data?.overview}
                                 </div>
                             </div>

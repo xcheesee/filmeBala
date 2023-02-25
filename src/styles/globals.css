@@ -6,7 +6,6 @@ div, p {
     color: #d4d4d4;
 }
 
-
 .infiniteScroll {
     animation: infiniteScroll 30s;
     animation-iteration-count: infinite;
@@ -26,6 +25,14 @@ div, p {
 :hover.sidebar * {
     animation: offsetPull 1s;
     animation-fill-mode: forwards;
+}
+
+.gradient_text {
+    background: -webkit-linear-gradient(to right, #b3ffab, #12fff7);
+    background: linear-gradient(to right, #b3ffab, #12fff7);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .loader {
