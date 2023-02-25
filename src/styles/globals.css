@@ -35,6 +35,15 @@ div, p {
     -webkit-text-fill-color: transparent;
 }
 
+.skeleton_gradient {
+    background: rgb(144,144,144);
+    background: linear-gradient(90deg, rgba(144,144,144,1) 0%,  rgba(200,200,200,1) 30%, rgba(144,144,144,1) 60%);
+}
+
+.skeleton_animation {
+    animation: shimmer 1.8s ease-in-out infinite;
+}
+
 .loader {
     margin: 0px auto;
     width: 25px;
@@ -47,6 +56,12 @@ div, p {
     stroke-width: 3px;
     stroke-linecap: round;
     animation: animate-stroke 1.5s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+    100% {
+        transform: translateX(0%);
+    }
 }
 
 @keyframes rotate {

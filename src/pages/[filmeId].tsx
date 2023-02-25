@@ -8,6 +8,7 @@ import StarRating from "../components/starRating";
 import { useState } from "react";
 import CircularLoader from "../components/circularLoader";
 import { Comment, MdbUser, type MovieRating } from "@prisma/client";
+import SkeletonElement from "../components/skeletonElement";
 
 const FilmePage: NextPage = () => {
     
@@ -96,6 +97,7 @@ const FilmePage: NextPage = () => {
                                 </div>
                                 <div className="max-w-[120ch] self-center justify-self-center text-xl col-span-2 leading-loose">
                                     {filme?.data?.overview}
+                                    {/* <SkeletonElement width="200px" height="50px"/> */}
                                 </div>
                             </div>
                         </div>
