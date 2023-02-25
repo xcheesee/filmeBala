@@ -45,6 +45,7 @@ model Movie {
   runtime Int
   ratings Float
   Status String
+  backdropPath String
   userToWatch MdbUser[]
   nativeRatings MovieRating[]
   likes MovieLike[]

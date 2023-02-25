@@ -36,7 +36,7 @@ const StarRating: React.FC = () => {
                     onMouseLeave={() => setIsHovering(false)}
                     >
                         <div 
-                            className={`absolute ${isHovering? "block" : "hidden"} py-2 px-4 rounded-xl`} 
+                            className={`absolute ${isHovering? "block" : "hidden"} py-2 px-4 rounded-xl z-30`} 
                             style={{transformOrigin: "top 10px", transform: "translate(0, -150%)", background: "rgba(0, 0, 0, 0.5)"}}
                             
                         >

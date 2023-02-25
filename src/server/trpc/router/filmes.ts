@@ -25,6 +25,7 @@ export const filmesRouter = router({
             } else {
                 const filmeData = await fetch(`https://api.themoviedb.org/3/movie/${input}?api_key=${env.TMDB_API_KEY}&language=en-US`)
                 const json = await filmeData.json()
+                console.log(json)
                 return await ctx.prisma.movie.create({
                     data: {
                         id: json.id,
@@ -36,6 +37,7 @@ export const filmesRouter = router({
                         ratings: json.vote_average,
                         Status: json.status,
                         posterPath: json.poster_path,
+                        backdropPath: json.backdrop_path,
                     }, 
                     include: {
                         nativeRatings: true,
