@@ -8,7 +8,6 @@ import StarRating from "../components/starRating";
 import { useState } from "react";
 import CircularLoader from "../components/circularLoader";
 import { Comment, MdbUser, type MovieRating } from "@prisma/client";
-import SkeletonElement from "../components/skeletonElement";
 
 const FilmePage: NextPage = () => {
     
@@ -50,7 +49,7 @@ const FilmePage: NextPage = () => {
                             <div className="absolute z-10 h-full w-full" style={{background: "rgba(0, 0, 0, 0.6)"}}>
                             </div>
                             <Image 
-                                src={filme?.data?.backdropPath}
+                                src={filme?.data?.backdropPath || ""}
                                 alt=""
                                 fill={true}
                                 loader={({ src }) => {

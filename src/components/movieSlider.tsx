@@ -3,7 +3,7 @@ import { useReducer } from "react";
 import { CARD_IMAGE_SIZE, MAX_SLIDER_SIZE } from "../utils/constants";
 import MovieCard from "./movieCard";
 
-const MovieSlider: React.FC<MSliderProps> = ({name, path}) => {
+const MovieSlider: React.FC<MSliderProps> = ({name, path, }) => {
     const { isLoading, data } = useQuery([`${name}Data`], async () => await ( await fetch(path)).json())
     const [slider, dispatch] = useReducer(reducer, {count: 0})
     function getSliderResetCondition (dataSize:number , containerSize: number, cardSize: number): number {
@@ -18,14 +18,14 @@ const MovieSlider: React.FC<MSliderProps> = ({name, path}) => {
             case 'start':
                 return {count: 0}
             case 'end':
-                return {count: data?.results?.length - 7}
+                return {count: data?.results?.length - 1}
             default:
                 throw new Error();
         }
     }
     return(
-        <div className="py-8 lg:px-4 overflow-hidden relative">
-            <p className="capitalize">{name}</p>
+        <div className="overflow-hidden relative bg-red-500">
+            <p className="capitalize absolute z-50 pl-16" style={{transform: "translate(0, 100%)"}}>{name}</p>
             {isLoading
                 ? ""
                 :<>
@@ -44,7 +44,7 @@ const MovieSlider: React.FC<MSliderProps> = ({name, path}) => {
                         className="absolute right-0 z-10 top-1/2 font-bold bg-[rgba(0,0,0,0.8)] p-2 rounded-[50%]" 
                         style={{transform: 'translate(0, -50%)'}}
                         onClick={() => {
-                            if(slider.count < getSliderResetCondition(data?.results?.length, MAX_SLIDER_SIZE, CARD_IMAGE_SIZE) ) return dispatch({type: 'increment'})
+                            if(slider.count < getSliderResetCondition(data?.results?.length, MAX_SLIDER_SIZE, CARD_IMAGE_SIZE)) return dispatch({type: 'increment'})
                             return dispatch({type: 'start'})
                         }}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
@@ -53,17 +53,18 @@ const MovieSlider: React.FC<MSliderProps> = ({name, path}) => {
                     </button>
                 </>
             }
-            <div className="h-[300px] grid grid-flow-col py-2 transition duration-500" style={{transform: `translateX(-${(CARD_IMAGE_SIZE) * slider.count}px)`, maxWidth: `${MAX_SLIDER_SIZE}px`}}>
+            <div className="h-screen grid grid-flow-col w-screen relative transition duration-500" style={{transform: `translateX(-${100 * slider.count}%)`}}>
                 {isLoading
                     ? <div className="justify-self-center self-center">Loading...</div>
-                    :data?.results?.map((entry: MovieData, index: number) => 
+                    :
+                    data?.results?.map((entry: MovieData, index: number) => 
                     <MovieCard 
                         key={`mCard-${index}`}
                         name={entry.original_title} 
                         description={entry.overview} 
                         playtime="2h" 
                         ratings={entry.vote_average} 
-                        image={entry.poster_path}
+                        image={entry.backdrop_path}
                         id={entry.id} />)}
                 {
                 }
@@ -78,6 +79,7 @@ interface MovieData {
     overview: string,
     vote_average: number,
     poster_path: string,
+    backdrop_path: string,
     id: number
 }
 

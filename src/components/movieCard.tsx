@@ -6,15 +6,17 @@ import Image from 'next/image'
 
 const MovieCard: React.FC<McardProps> =  ({ name, playtime, description, ratings, id, image }) => {
     return (
-        <div className="h-full box-border px-[25px] relative overflow-hidden flex-none" style={{width: `${CARD_IMAGE_SIZE}px`}}>
-            <Image 
-                src={image} 
-                className='absolute'
-                alt="movie banner" 
-                width={200} 
-                height={"300"}
-                loader={({src}) => `https://image.tmdb.org/t/p/w200${src}`}
-            />
+        <div className="h-full box-border relative relative overflow-hidden flex-none w-screen" >
+            <div className='absolute h-screen w-screen'>
+                <Image 
+                    src={image} 
+                    className='absolute'
+                    alt="movie banner"
+                    fill
+                    loader={({src}) => `https://image.tmdb.org/t/p/original${src}`}
+                />
+
+            </div>
             <div className="mt-auto relative w-full h-full translate-y-[80%] 
             hover:translate-y-[0%] transition bg-neutral-800 relative rounded
             duration-1000 mCard grid grid-cols-3 grid-rows-[min-content_min-content_1fr_min-content]">

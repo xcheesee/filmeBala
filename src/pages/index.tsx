@@ -22,7 +22,7 @@ const Home: NextPage = () => {
                 </div>
             </div>
             <div className=" z-20 pb-20" style={{background: "inherit"}}>
-                <div className="flex justify-center relative overflow-hidden justify-self-center">
+                <div className="flex justify-center relative overflow-hidden justify-self-center w-screen h-screen">
                     <MovieSlider
                         name='populares' 
                         path='https://filme-bala.vercel.app/api/movies/populares'/>
