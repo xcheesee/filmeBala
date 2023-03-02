@@ -6,8 +6,8 @@ const Home: NextPage = () => {
 
     return(
         <>
-            <div className="max-w-[100vw] relative overflow-hidden" style={{height: "calc(100vh)"}}>
-                <div className="absolute z-10 h-full w-full bg-[rgba(0,0,0,0.85)] flex flex-col justify-center items-center gap-4">
+            <div className="relative" style={{height: "100vh"}}>
+                <div className="absolute z-10 h-screen w-full bg-[rgba(0,0,0,0.85)] flex flex-col justify-center items-center gap-4">
                     <p className="text-7xl tracking-widest font-light  py-8">SO FILME BALA</p>
                     <p className="text-3xl">De Mafioso, De Guerra, De Luta, De Tiro, etc. so os bom mlk.</p>
                     <p className="text-3xl">Vem de arrasta pra cima que eh sucesso, tudo gratis.</p>
@@ -21,22 +21,22 @@ const Home: NextPage = () => {
                     </div>
                 </div>
             </div>
-            <div className=" z-20 pb-20" style={{background: "inherit"}}>
-                <div className="flex justify-center relative overflow-hidden justify-self-center w-screen h-screen">
+            <div className="z-20 pb-20" style={{background: "inherit"}}>
+                {/* <div className="flex justify-center relative justify-self-center"> */}
                     <MovieSlider
                         name='populares' 
                         path='https://filme-bala.vercel.app/api/movies/populares'/>
-                </div>
-                <div className="flex justify-center relative overflow-hidden justify-self-center">
+                {/* </div> */}
+                {/* <div className="flex justify-center relative justify-self-center"> */}
                     <MovieSlider 
                         name='acao' 
                         path='https://filme-bala.vercel.app/api/movies/populares?genre=28'/>
-                </div>
-                <div className="flex justify-center relative overflow-hidden justify-self-center">
+                {/* </div> */}
+                {/* <div className="flex justify-center relative justify-self-center"> */}
                     <MovieSlider
                         name='comedia'
                         path='https://filme-bala.vercel.app/api/movies/populares?genre=35' />
-                </div>
+                {/* </div> */}
 
             </div>
         </>

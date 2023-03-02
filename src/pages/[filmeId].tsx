@@ -40,7 +40,7 @@ const FilmePage: NextPage = () => {
     const nativeRating: number | null = nativeRatings === null ? null : nativeRatings.reduce((acc: number, val: NativeRating) => acc + val.rating, 0) / ratingsCount
 
     return (
-        <div className="my-16">
+        <div className="mb-16">
             {
                 filme.isLoading 
                     ? <div>Carregando...</div>

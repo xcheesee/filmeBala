@@ -23,7 +23,7 @@ const Profile: NextPage = () => {
             {
                 userData.isLoading 
                     ? <div>...Carregando</div>
-                    :<div className="grid grid-cols-[200px_1fr] mt-16">
+                    :<div className="grid grid-cols-[200px_1fr]">
                     <div className="flex flex-col gap-2 bg-neutral-900 pt-4">
                         <SidebarElement
                             tabValue={0}

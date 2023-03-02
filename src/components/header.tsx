@@ -9,7 +9,7 @@ const Header: React.FC = () => {
     const session = useSession()
     const router = useRouter()
     return (
-        <div className="flex justify-between pl-4 pr-8 py-4 max-w-[100vw] shadow-lg fixed min-w-full z-30 bg-neutral-800 ">
+        <div className="flex justify-between pl-4 pr-8 py-4 shadow-lg z-30 bg-neutral-800 ">
             <Link href={"/"}>
                 <h1 className="font-bold text-3xl gradient_text"> Filmin </h1>
             </Link>

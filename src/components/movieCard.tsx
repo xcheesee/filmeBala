@@ -6,8 +6,25 @@ import Image from 'next/image'
 
 const MovieCard: React.FC<McardProps> =  ({ name, playtime, description, ratings, id, image }) => {
     return (
-        <div className="h-full box-border relative relative overflow-hidden flex-none w-screen" >
-            <div className='absolute h-screen w-screen'>
+        <div className="h-full box-border relative overflow-hidden w-screen" >
+            <div className='absolute h-screen w-full z-50 grid grid-cols-2 px-8' style={{ background: "rgba(0, 0, 0, 0.7)"}}>
+                <p className="p-8 col-start-2 justify-self-end">TMDb: {ratings} <FontAwesomeIcon icon={faStar} /></p>
+                <div className='col-span-2 px-12'>
+                    <p className=" text-7xl col-span-2 font-bold max-w-[20ch]">{name}</p>
+                    {/* <p className="row-start-2 text-neutral-500">{playtime}</p> */}
+                        <p className="h-full text-2xl align-middle col-span-2 max-w-[120ch] my-8" style={{color: "rgba(255, 255, 255, 0.7)"}}>{description}</p>
+                </div>
+                <div className=" flex justify-center py-2 col-span-2 self-end justify-self-end p-8 mb-8">
+                    <Link href={`/${id}`}>
+                        <button 
+                            className='rounded bg-green-600 font-bold py-2 px-4 z-10'
+                        >
+                            Ver Pagina
+                        </button>
+                    </Link>
+                </div>
+            </div>
+            <div className='absolute h-screen w-full'>
                 <Image 
                     src={image} 
                     className='absolute'
@@ -17,7 +34,7 @@ const MovieCard: React.FC<McardProps> =  ({ name, playtime, description, ratings
                 />
 
             </div>
-            <div className="mt-auto relative w-full h-full translate-y-[80%] 
+            {/* <div className="mt-auto relative w-full h-full translate-y-[80%] 
             hover:translate-y-[0%] transition bg-neutral-800 relative rounded
             duration-1000 mCard grid grid-cols-3 grid-rows-[min-content_min-content_1fr_min-content]">
                 <p className="col-span-3 text-xl">{name}</p>
@@ -35,7 +52,7 @@ const MovieCard: React.FC<McardProps> =  ({ name, playtime, description, ratings
                         </button>
                     </Link>
                 </div>
-            </div>
+            </div> */}
         </div>
     )
 }

@@ -20,7 +20,7 @@ const Signup: NextPage = () => {
     const router = useRouter()
     return(
         <>
-            <div className="w-3/6 bg-neutral-900 self-center justify-self-center rounded relative b-10 my-20" style={{
+            <div className="w-3/6 bg-neutral-900 self-center justify-self-center rounded relative b-10 mb-20" style={{
                 // background: GRADIENT_COLOR,
             }}>
                 <div
