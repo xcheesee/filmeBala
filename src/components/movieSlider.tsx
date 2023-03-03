@@ -3,7 +3,7 @@ import { useReducer } from "react";
 import { CARD_IMAGE_SIZE, MAX_SLIDER_SIZE } from "../utils/constants";
 import MovieCard from "./movieCard";
 
-const MovieSlider: React.FC<MSliderProps> = ({name, path, }) => {
+const MovieSlider: React.FC<MSliderProps> = ({name, path, className }) => {
     const { isLoading, data } = useQuery([`${name}Data`], async () => await ( await fetch(path)).json())
     const [slider, dispatch] = useReducer(reducer, {count: 0})
     function getSliderResetCondition (dataSize:number , containerSize: number, cardSize: number): number {
@@ -24,7 +24,7 @@ const MovieSlider: React.FC<MSliderProps> = ({name, path, }) => {
         }
     }
     return(
-        <div className="overflow-hidden relative bg-red-500">
+        <div className={`overflow-x-hidden relative bg-red-500 sticky top-0 ${className}`}>
             <p className="capitalize absolute z-50 text-3xl pl-8" style={{transform: "translate(0, 100%)"}}>{name}</p>
             {isLoading
                 ? ""
@@ -86,6 +86,7 @@ interface MovieData {
 type MSliderProps = {
     name: string;
     path: string;
+    className?: string;
 }
 
 export default MovieSlider

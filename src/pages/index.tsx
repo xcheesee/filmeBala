@@ -12,7 +12,7 @@ const Home: NextPage = () => {
                     <p className="text-3xl">De Mafioso, De Guerra, De Luta, De Tiro, etc. so os bom mlk.</p>
                     <p className="text-3xl">Vem de arrasta pra cima que eh sucesso, tudo gratis.</p>
                 </div>
-                <div className="h-full min-w-full flex infiniteScroll fixed">
+                <div className="h-full min-w-full flex infiniteScroll fixed top-0">
                     <div className="relative min-w-full">
                         <Image src='/wp1945898.jpg' fill alt="" style={{objectFit: "cover"}}/>
                     </div>
@@ -24,16 +24,19 @@ const Home: NextPage = () => {
             <div className="z-20 pb-20" style={{background: "inherit"}}>
                 {/* <div className="flex justify-center relative justify-self-center"> */}
                     <MovieSlider
+                        className="mb-60"
                         name='populares' 
                         path='https://filme-bala.vercel.app/api/movies/populares'/>
                 {/* </div> */}
                 {/* <div className="flex justify-center relative justify-self-center"> */}
                     <MovieSlider 
+                        className="mb-60"
                         name='acao' 
                         path='https://filme-bala.vercel.app/api/movies/populares?genre=28'/>
                 {/* </div> */}
                 {/* <div className="flex justify-center relative justify-self-center"> */}
                     <MovieSlider
+                        // className="mb-60"
                         name='comedia'
                         path='https://filme-bala.vercel.app/api/movies/populares?genre=35' />
                 {/* </div> */}
