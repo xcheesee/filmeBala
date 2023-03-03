@@ -58,17 +58,15 @@ const MovieSlider: React.FC<MSliderProps> = ({name, path, className }) => {
                     ? <div className="justify-self-center self-center">Loading...</div>
                     :
                     data?.results?.map((entry: MovieData, index: number) => 
-                    <MovieCard 
-                        key={`mCard-${index}`}
-                        name={entry.original_title} 
-                        description={entry.overview} 
-                        playtime="2h" 
-                        ratings={entry.vote_average} 
-                        image={entry.backdrop_path}
-                        id={entry.id} />)}
-                {
-                }
-
+                        (<MovieCard 
+                            key={`mCard-${index}`}
+                            name={entry.original_title} 
+                            description={entry.overview} 
+                            playtime="2h" 
+                            ratings={entry.vote_average} 
+                            image={entry.backdrop_path}
+                            id={entry.id} />)
+                    )}
             </div>
         </div>
     )
