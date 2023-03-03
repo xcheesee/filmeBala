@@ -63,7 +63,7 @@ const Home: NextPage = () => {
                 </div>
                 <div className="self-center justify-self-center py-16">
                     <p className="text-center text-5xl font-bold">Nao achou o que assistir?</p>
-                    <p className="py-4 text-3xl w-[40ch] text-center">Use a barra de pesquisa acima e ache a melhor forma de desperdicar 2h de sua vida</p>
+                    <p className="py-4 text-3xl max-w-[40ch] text-center">Use a barra de pesquisa acima e ache a melhor forma de desperdicar 2h de sua vida</p>
                 </div>
             </div>
         </>

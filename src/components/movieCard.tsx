@@ -12,7 +12,7 @@ const MovieCard: React.FC<McardProps> =  ({ name, playtime, description, ratings
                 <div className='col-span-2 px-12'>
                     <p className=" text-7xl col-span-2 font-bold max-w-[20ch]">{name}</p>
                     {/* <p className="row-start-2 text-neutral-500">{playtime}</p> */}
-                        <p className="h-full text-2xl align-middle col-span-2 max-w-[120ch] my-8" style={{color: "rgba(255, 255, 255, 0.7)"}}>{description}</p>
+                        <p className="hidden md:block h-full text-2xl align-middle col-span-2 max-w-[120ch] my-8" style={{color: "rgba(255, 255, 255, 0.7)"}}>{description}</p>
                 </div>
                 <div className=" flex justify-center py-2 col-span-2 self-end justify-self-end p-8 mb-8">
                     <Link href={`/${id}`}>
