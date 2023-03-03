@@ -6,7 +6,7 @@ import Image from 'next/image'
 
 const MovieCard: React.FC<McardProps> =  ({ name, playtime, description, ratings, id, image }) => {
     return (
-        <div className="h-full box-border relative overflow-hidden w-screen" >
+        <div className="h-full box-border relative overflow-hidden w-[99vw]" >
             <div className='absolute h-screen w-full z-50 grid grid-cols-2 px-8' style={{ background: "rgba(0, 0, 0, 0.7)"}}>
                 <p className="p-8 col-start-2 justify-self-end">TMDb: {ratings} <FontAwesomeIcon icon={faStar} /></p>
                 <div className='col-span-2 px-12'>
@@ -24,17 +24,17 @@ const MovieCard: React.FC<McardProps> =  ({ name, playtime, description, ratings
                     </Link>
                 </div>
             </div>
-            <div className='absolute h-screen w-full'>
+            <div className='absolute h-screen w-[99vw]'>
                 <Image 
-                    src={image} 
-                    className='absolute'
+                    src={image}
                     alt="movie banner"
                     fill
                     loader={({src}) => `https://image.tmdb.org/t/p/original${src}`}
                 />
 
             </div>
-            {/* <div className="mt-auto relative w-full h-full translate-y-[80%] 
+        {
+            /* <div className="mt-auto relative w-full h-full translate-y-[80%] 
             hover:translate-y-[0%] transition bg-neutral-800 relative rounded
             duration-1000 mCard grid grid-cols-3 grid-rows-[min-content_min-content_1fr_min-content]">
                 <p className="col-span-3 text-xl">{name}</p>
@@ -52,7 +52,8 @@ const MovieCard: React.FC<McardProps> =  ({ name, playtime, description, ratings
                         </button>
                     </Link>
                 </div>
-            </div> */}
+            </div> */
+        }
         </div>
     )
 }

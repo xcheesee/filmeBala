@@ -27,7 +27,7 @@ const Signup: NextPage = () => {
                     className="grid grid-cols-[1fr_min-content_1fr] h-full bg-neutral-900 relative top-2 rounded-b"
                 >
                     <form 
-                        className="flex flex-col gap-6  w-3/4 m-auto" 
+                        className="flex flex-col gap-6  w-3/4 m-auto"
                         id="login-form"
                         onSubmit={async (e) => {
                             e.preventDefault()
