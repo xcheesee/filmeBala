@@ -3,6 +3,7 @@ import { faStar} from '@fortawesome/free-solid-svg-icons'
 import { CARD_IMAGE_SIZE } from '../utils/constants'
 import Link from 'next/link'
 import Image from 'next/image'
+import Button from './button'
 
 const MovieCard: React.FC<McardProps> =  ({ name, playtime, description, ratings, id, image }) => {
     return (
@@ -14,13 +15,13 @@ const MovieCard: React.FC<McardProps> =  ({ name, playtime, description, ratings
                     {/* <p className="row-start-2 text-neutral-500">{playtime}</p> */}
                         <p className="hidden md:block h-full text-2xl align-middle col-span-2 max-w-[120ch] my-8" style={{color: "rgba(255, 255, 255, 0.7)"}}>{description}</p>
                 </div>
-                <div className=" flex justify-center py-2 col-span-2 self-end justify-self-end p-8 mb-8">
+                <div className=" flex justify-center col-span-2 self-end justify-self-end p-8 mb-8">
                     <Link href={`/${id}`}>
-                        <button 
-                            className='rounded bg-green-600 font-bold py-2 px-4 z-10'
+                        <Button 
+                            className='text-xl py-4'
                         >
                             Ver Pagina
-                        </button>
+                        </Button>
                     </Link>
                 </div>
             </div>

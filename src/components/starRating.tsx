@@ -47,7 +47,7 @@ const StarRating: React.FC = () => {
                 }
                 {[...Array(10)].map((el, index) => {
                     return (
-                        <span className={index >= starCount ? "text-white" : "text-yellow-500"} key={`star-${index}`}> 
+                        <span className={`${index >= starCount ? "text-white" : "text-yellow-500"}`} key={`star-${index}`}> 
                             <FontAwesomeIcon 
                                 icon={faStar} 
                                 size="2x" 

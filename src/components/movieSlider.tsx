@@ -72,7 +72,7 @@ const MovieSlider: React.FC<MSliderProps> = ({name, path, className }) => {
     )
 }
 
-interface MovieData {
+export interface MovieData {
     original_title: string,
     overview: string,
     vote_average: number,

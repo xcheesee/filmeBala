@@ -57,8 +57,8 @@ const FilmePage: NextPage = () => {
                                 }}
                             />
                         </div>
-                        <div className="flex">
-                            <div className="relative z-20 w-[230px] h-[350px] rounded-xl border-4 border-neutral-900 shadow-xl" style={{transform: "translate(50%, -50%)"}}>
+                        <div className="flex flex-col lg:flex-row">
+                            <div className="relative self-center -translate-y-1/2 lg:translate-x-1/2 lg:self-start z-20 w-[230px] h-[350px] rounded-xl border-4 border-neutral-900 shadow-xl">
                                     <Image 
                                         src={filme?.data?.posterPath || ""} 
                                         alt="movie banner"
@@ -70,7 +70,7 @@ const FilmePage: NextPage = () => {
                                     />
                                     
                             </div>
-                            <div className="grid grid-cols-2 w-full pl-36 pr-6 pt-6">
+                            <div className="grid max-lg:-translate-y-1/3 md:grid-cols-2 w-full lg:pl-36 pr-6 pt-6">
                                 <div>
                                     <div className="font-light text-5xl tracking-wider">
                                         {filme?.data?.title}
@@ -89,7 +89,7 @@ const FilmePage: NextPage = () => {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="justify-self-end">
+                                <div className="justify-self-center lg:justify-self-end row-start-1 md:col-start-2 md:col-span-1 col-span-2 ">
                                     <div className="flex">
                                         <StarRating />
                                     </div>

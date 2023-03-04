@@ -1,16 +1,19 @@
 import { type NextPage } from "next";
 import Image from "next/image";
-import MovieSlider from "../components/movieSlider";
+import MovieSlider, { MovieData } from "../components/movieSlider";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRef } from "react";
 import { useMutation } from "@tanstack/react-query";
+import FindMCard from "../components/findMCard";
+
 
 const Home: NextPage = () => {
     const searchValue = useRef<HTMLInputElement>(null)
     const searchResult = useMutation({
         mutationFn: async (movieString: string) => await (await fetch(`http://localhost:3000/api/movies/find?movie=${movieString}`)).json()
     })
+    console.log(searchResult.data)
     return(
         <>
             <div className="relative" style={{height: "100vh"}}>
@@ -61,9 +64,26 @@ const Home: NextPage = () => {
                         <FontAwesomeIcon icon={faMagnifyingGlass} color={"#666666"} className="relative" style={{transform: "translateX(-150%)"}}/>
                     </button>
                 </div>
-                <div className="self-center justify-self-center py-16">
-                    <p className="text-center text-5xl font-bold">Nao achou o que assistir?</p>
-                    <p className="py-4 text-3xl max-w-[40ch] text-center">Use a barra de pesquisa acima e ache a melhor forma de desperdicar 2h de sua vida</p>
+                <div className="flex flex-col self-center justify-self-center py-16 w-full xl:w-[1260px]">
+                    {searchResult.data === undefined || searchResult.isLoading
+                        ?<>
+                            <p className="text-center text-5xl font-bold">Nao achou o que assistir?</p>
+                            <p className="py-4 text-3xl max-w-[40ch] self-center text-center">Use a barra de pesquisa acima e ache a melhor forma de desperdicar 2h de sua vida</p>
+                        </>
+                        : searchResult?.data?.results?.map((entry: MovieData, index: number) => {
+                            console.log(entry)
+                            return (
+                            
+                            <FindMCard 
+                                key={`search-${index}`} 
+                                name={entry.original_title} 
+                                description={entry.overview} 
+                                ratings={entry.vote_average} 
+                                id={entry.id}
+                                image={entry.poster_path}
+                            />
+                        )})
+                    } 
                 </div>
             </div>
         </>
