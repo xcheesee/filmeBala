@@ -3,7 +3,7 @@ import Image from "next/image";
 import MovieSlider, { MovieData } from "../components/movieSlider";
 import { faMagnifyingGlass, faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import FindMCard from "../components/findMCard";
 import CircularLoader from "../components/circularLoader";
@@ -13,9 +13,9 @@ import Pagination from "../components/pagination";
 const Home: NextPage = () => {
     const searchValue = useRef<HTMLInputElement>(null)
     const searchResult = useMutation({
-        mutationFn: async (movieString: string) => await (await fetch(`http://localhost:3000/api/movies/find?movie=${movieString}`)).json()
+        mutationFn: async (movieString: {query: string, page: number}) => await (await fetch(`http://localhost:3000/api/movies/find?movie=${movieString.query}&page=${movieString.page}`)).json()
     })
-    console.log(searchResult.data)
+    const [selectedPage, setSelectedPage] = useState(1)
     return(
         <>
             <div className="relative" style={{height: "100vh"}}>
@@ -60,7 +60,7 @@ const Home: NextPage = () => {
                     <button onClick={async () => {
                         if(!searchValue.current?.value) return
                         const query = searchValue.current.value
-                        searchResult.mutate(query)
+                        searchResult.mutate({query, page: 1})
                         console.log(await searchResult.data)
                     }}>
                         <FontAwesomeIcon icon={faMagnifyingGlass} color={"#666666"} className="relative" style={{transform: "translateX(-150%)"}}/>
@@ -89,9 +89,17 @@ const Home: NextPage = () => {
                                 />
                             )})
                     }
-                    <div className="flex justify-center py-2 px-4">
-                        <Pagination pages={10} />
+                    <div className={`flex justify-center py-2 px-4 ${searchResult.isLoading || searchResult.data === undefined ? "hidden" : ""}`}>
+                        <Pagination 
+                            pages={searchResult?.data?.total_pages || 1}
+                            clickEv={(pag: number) => {
+                                if(!searchValue.current?.value) return
+                                const query = searchValue.current.value
+                                return searchResult.mutate({query: query, page: pag})
+                            }}
+                        />
                     </div>
+                    
                 </div>
             </div>
         </>
