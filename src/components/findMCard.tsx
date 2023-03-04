@@ -24,7 +24,7 @@ const FindMCard: React.FC<FindMCardProps> = ({image, name, description, ratings,
                 }
             </div>
             <div className="grid lg:grid-cols-[1fr_max-content] gap-4 w-full">
-                <div className="row-span-2 mt-16">
+                <div className="row-span-2 lg:mt-16">
                     <p className="font-bold text-3xl">{name}</p>  
                     <p className="my-4">{description}</p>
                 </div>
@@ -33,7 +33,7 @@ const FindMCard: React.FC<FindMCardProps> = ({image, name, description, ratings,
                     <div className=""><b>Filmin</b>: TBD/10 <FontAwesomeIcon icon={faStar} /></div>
                 </div>
                 <Button 
-                    className="lg:justify-self-end self-end my-2 mx-4"
+                    className="lg:justify-self-end self-end my-2 lg:mx-4"
                     onClick={() => {
                         router.push(`/${id}`)
                     }}
