@@ -13,7 +13,7 @@ import Pagination from "../components/pagination";
 const Home: NextPage = () => {
     const searchValue = useRef<HTMLInputElement>(null)
     const searchResult = useMutation({
-        mutationFn: async (movieString: {query: string, page: number}) => await (await fetch(`http://localhost:3000/api/movies/find?movie=${movieString.query}&page=${movieString.page}`)).json()
+        mutationFn: async (movieString: {query: string, page: number}) => await (await fetch(`https://filme-bala.vercel.app/api/movies/find?movie=${movieString.query}&page=${movieString.page}`)).json()
     })
     const [selectedPage, setSelectedPage] = useState(1)
     return(
