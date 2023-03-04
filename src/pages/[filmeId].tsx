@@ -8,6 +8,7 @@ import StarRating from "../components/starRating";
 import { useState } from "react";
 import CircularLoader from "../components/circularLoader";
 import { Comment, MdbUser, type MovieRating } from "@prisma/client";
+import PageSpinner from "../components/pageSpinner";
 
 const FilmePage: NextPage = () => {
     
@@ -42,8 +43,8 @@ const FilmePage: NextPage = () => {
     return (
         <div className="mb-16">
             {
-                filme.isLoading 
-                    ? <div>Carregando...</div>
+                filme.isLoading
+                    ? <PageSpinner />
                     :<>
                         <div className="relative w-full h-[50vh] grid-cols-2">
                             <div className="absolute z-10 h-full w-full" style={{background: "rgba(0, 0, 0, 0.6)"}}>
@@ -58,7 +59,7 @@ const FilmePage: NextPage = () => {
                             />
                         </div>
                         <div className="flex flex-col lg:flex-row">
-                            <div className="relative self-center -translate-y-1/2 lg:translate-x-1/2 lg:self-start z-20 w-[230px] h-[350px] rounded-xl border-4 border-neutral-900 shadow-xl">
+                            <div className="relative self-center max-md:-translate-y-2/3 -translate-y-1/2 lg:translate-x-1/2 lg:self-start z-20 w-[230px] h-[350px] rounded-xl border-4 border-neutral-900 shadow-xl">
                                     <Image 
                                         src={filme?.data?.posterPath || ""} 
                                         alt="movie banner"
@@ -101,7 +102,7 @@ const FilmePage: NextPage = () => {
                             </div>
                         </div>
                         <div className="grid mt-16 pb-4 pr-4">
-                            <div className="mt-4 self-end justify-self-end">
+                            <div className="mt-4 self-end justify-self-center lg:justify-self-end">
                                 <button 
                                     className={`${assistirDepoisFlag ? "bg-red-500" : "bg-blue-600"} py-2 px-4 rounded-lg`}
                                     onClick={async () => {

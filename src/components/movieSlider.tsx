@@ -1,7 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { useReducer } from "react";
 import { CARD_IMAGE_SIZE, MAX_SLIDER_SIZE } from "../utils/constants";
+import CircularLoader from "./circularLoader";
 import MovieCard from "./movieCard";
+import SkeletonElement from "./skeletonElement";
 
 const MovieSlider: React.FC<MSliderProps> = ({name, path, className }) => {
     const { isLoading, data } = useQuery([`${name}Data`], async () => await ( await fetch(path)).json())
@@ -24,7 +26,7 @@ const MovieSlider: React.FC<MSliderProps> = ({name, path, className }) => {
         }
     }
     return(
-        <div className={`overflow-x-hidden relative bg-red-500 sticky top-0 ${className}`}>
+        <div className={`overflow-x-hidden relative bg-neutral-800 sticky top-0 ${className}`}>
             <p className="capitalize absolute z-50 text-3xl pl-8" style={{transform: "translate(0, 100%)"}}>{name}</p>
             {isLoading
                 ? ""
@@ -55,7 +57,7 @@ const MovieSlider: React.FC<MSliderProps> = ({name, path, className }) => {
             }
             <div className="h-screen grid grid-flow-col w-[99vw] relative transition duration-500" style={{transform: `translateX(-${100 * slider.count}%)`}}>
                 {isLoading
-                    ? <div className="justify-self-center self-center">Loading...</div>
+                    ? <div className="justify-self-center self-center"><SkeletonElement width="100vw" height="100vh" /></div>
                     :
                     data?.results?.map((entry: MovieData, index: number) => 
                         (<MovieCard 
