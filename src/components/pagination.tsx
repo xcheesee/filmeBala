@@ -1,6 +1,7 @@
 import { useRef, useState } from "react"
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { GRADIENT_COLOR } from "../utils/constants";
 
 const Pagination: React.FC<PaginationProps> = ({pages, selected, clickEv}) => {
     // const [selected, setSelected] = useState(1)
@@ -23,7 +24,8 @@ const Pagination: React.FC<PaginationProps> = ({pages, selected, clickEv}) => {
                                             // setSelected(index + 1)
                                             clickEv(index + 1)
                                         }}
-                                        className={`px-3 py-1 rounded-lg  ${selected === index + 1 ? "bg-purple-600" : "hover:bg-neutral-500"}`}
+                                        className={`px-3 py-1 rounded-lg  ${selected === index + 1 ? "text-[#171717]" : "hover:bg-neutral-500"}`}
+                                        style={{background: `${selected === index + 1 ? GRADIENT_COLOR : ""}`}}
                                     >
                                         {index + 1}
                                     </button>
@@ -60,7 +62,8 @@ const Pagination: React.FC<PaginationProps> = ({pages, selected, clickEv}) => {
                                             // setSelected(index + 1)
                                             clickEv(index + 1)
                                         }}
-                                        className={`px-3 py-1 rounded-lg ${selected === index + 1 ? "bg-purple-600" : "hover:bg-neutral-500"}`}
+                                        className={`px-3 py-1 rounded-lg ${selected === index + 1 ? "text-[#171717]" : "hover:bg-neutral-500"}`}
+                                        style={{background: `${selected === index + 1 ? GRADIENT_COLOR : ""}`}}
                                     >
                                         {index + 1}
                                     </button>
@@ -75,7 +78,8 @@ const Pagination: React.FC<PaginationProps> = ({pages, selected, clickEv}) => {
                                         // setSelected(index + 1)
                                         clickEv(index + 1)
                                     }}
-                                    className={`px-3 py-1 rounded-lg ${selected === index + 1 ? "bg-purple-600" : "hover:bg-neutral-500"}`}
+                                    className={`px-3 py-1 rounded-lg ${selected === index + 1 ? "text-[#171717]" : "hover:bg-neutral-500"}`}
+                                    style={{background: `${selected === index + 1 ? GRADIENT_COLOR : ""}`}}
                                 >
                                     {index + 1}
                                 </button>
@@ -92,7 +96,8 @@ const Pagination: React.FC<PaginationProps> = ({pages, selected, clickEv}) => {
                                     // setSelected(index + 1)
                                     clickEv(index + 1)
                                 }}
-                                className={`px-3 py-1 rounded-lg  ${selected === index + 1 ? "bg-purple-600" : "hover:bg-neutral-500"}`}
+                                className={`px-3 py-1 rounded-lg  ${selected === index + 1 ? "text-[#171717]" : "hover:bg-neutral-500"}`}
+                                style={{background: `${selected === index + 1 ? GRADIENT_COLOR : ""}`}}
                             >
                                 {index + 1}
                             </button>

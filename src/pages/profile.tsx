@@ -6,6 +6,7 @@ import { useState } from "react"
 import Button from "../components/button"
 import CircularLoader from "../components/circularLoader"
 import Input from "../components/Input"
+import PageSpinner from "../components/pageSpinner"
 import RedirectUnauth from "../components/redirectUnauth"
 import SidebarElement from "../components/sidebarElement"
 import TabElement from "../components/tabElement"
@@ -22,7 +23,7 @@ const Profile: NextPage = () => {
         <RedirectUnauth>
             {
                 userData.isLoading 
-                    ? <div>...Carregando</div>
+                    ? <div><PageSpinner /></div>
                     :<div className="grid grid-cols-[200px_1fr]">
                     <div className="flex flex-col gap-2 bg-neutral-900 pt-4">
                         <SidebarElement
