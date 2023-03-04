@@ -1,12 +1,13 @@
 import { type NextPage } from "next";
 import Image from "next/image";
 import MovieSlider, { MovieData } from "../components/movieSlider";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { faMagnifyingGlass, faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRef } from "react";
 import { useMutation } from "@tanstack/react-query";
 import FindMCard from "../components/findMCard";
 import CircularLoader from "../components/circularLoader";
+import Pagination from "../components/pagination";
 
 
 const Home: NextPage = () => {
@@ -66,28 +67,31 @@ const Home: NextPage = () => {
                     </button>
                 </div>
                 <div className="flex flex-col self-center justify-self-center py-16 w-full xl:w-[1260px]">
-                    {searchResult.data === undefined
-                        ?<>
-                            <p className="text-center text-5xl font-bold">Nao achou o que assistir?</p>
-                            <p className="py-4 text-3xl max-w-[40ch] self-center text-center">Use a barra de pesquisa acima e ache a melhor forma de desperdicar 2h de sua vida</p>
-                        </>
-                        : searchResult.isLoading
-                            ? <div className="flex">
-                                <CircularLoader color="white" width={50} height={50} />
-                            </div>
+                    {searchResult.isLoading
+                        ? <div className="flex">
+                            <CircularLoader color="white" width={50} height={50} />
+                        </div>
+                        :searchResult.data === undefined
+                            ?<>
+                                <p className="text-center text-5xl font-bold">Nao achou o que assistir?</p>
+                                <p className="py-4 text-3xl max-w-[40ch] self-center text-center">Use a barra de pesquisa acima e ache a melhor forma de desperdicar 2h de sua vida</p>
+                            </>
                             :searchResult?.data?.results?.map((entry: MovieData, index: number) => {
-                            return (
-                            
-                            <FindMCard 
-                                key={`search-${index}`} 
-                                name={entry.original_title} 
-                                description={entry.overview} 
-                                ratings={entry.vote_average} 
-                                id={entry.id}
-                                image={entry.poster_path}
-                            />
-                        )})
-                    } 
+                                return (
+                                
+                                <FindMCard 
+                                    key={`search-${index}`} 
+                                    name={entry.original_title} 
+                                    description={entry.overview} 
+                                    ratings={entry.vote_average} 
+                                    id={entry.id}
+                                    image={entry.poster_path}
+                                />
+                            )})
+                    }
+                    <div className="flex justify-center py-2 px-4">
+                        <Pagination pages={10} />
+                    </div>
                 </div>
             </div>
         </>
