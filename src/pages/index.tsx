@@ -92,10 +92,12 @@ const Home: NextPage = () => {
                     <div className={`flex justify-center py-2 px-4 ${searchResult.isLoading || searchResult.data === undefined ? "hidden" : ""}`}>
                         <Pagination 
                             pages={searchResult?.data?.total_pages || 1}
+                            selected={selectedPage}
                             clickEv={(pag: number) => {
                                 if(!searchValue.current?.value) return
                                 const query = searchValue.current.value
-                                return searchResult.mutate({query: query, page: pag})
+                                searchResult.mutate({query: query, page: pag})
+                                return setSelectedPage(pag)
                             }}
                         />
                     </div>

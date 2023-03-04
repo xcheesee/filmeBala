@@ -2,15 +2,14 @@ import { useRef, useState } from "react"
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const Pagination: React.FC<PaginationProps> = ({pages, clickEv}) => {
-    const [selected, setSelected] = useState(1)
+const Pagination: React.FC<PaginationProps> = ({pages, selected, clickEv}) => {
+    // const [selected, setSelected] = useState(1)
     return(
         <div className="grid grid-cols-9 justify-center items-center py-1 px-2 gap-2">
-            <button onClick={() => setSelected(prev => {
-                    if(prev === 1) return prev
-                    clickEv(prev - 1)
-                    return prev - 1
-                })}>
+            <button onClick={() => {
+                if(selected === 1) return
+                return clickEv(selected - 1)
+            }}>
                 <FontAwesomeIcon icon={faChevronLeft} />
             </button>
              {
@@ -21,7 +20,7 @@ const Pagination: React.FC<PaginationProps> = ({pages, clickEv}) => {
                                 <div key={`pagination-${index + 1}`} >
                                     <button 
                                         onClick={() => {
-                                            setSelected(index + 1)
+                                            // setSelected(index + 1)
                                             clickEv(index + 1)
                                         }}
                                         className={`px-3 py-1 rounded-lg  ${selected === index + 1 ? "bg-purple-600" : "hover:bg-neutral-500"}`}
@@ -38,7 +37,7 @@ const Pagination: React.FC<PaginationProps> = ({pages, clickEv}) => {
                         return(
                             <div key={`pagination-${index + 1}`} >
                                 <button onClick={() =>{
-                                        setSelected(index + 1)
+                                        // setSelected(index + 1)
                                         clickEv(index + 1)
                                     }
                                 }
@@ -58,7 +57,7 @@ const Pagination: React.FC<PaginationProps> = ({pages, clickEv}) => {
                                 <div key={`pagination-${index + 1}`} className="col-start-8">
                                     <button 
                                         onClick={() => {
-                                            setSelected(index + 1)
+                                            // setSelected(index + 1)
                                             clickEv(index + 1)
                                         }}
                                         className={`px-3 py-1 rounded-lg ${selected === index + 1 ? "bg-purple-600" : "hover:bg-neutral-500"}`}
@@ -73,7 +72,7 @@ const Pagination: React.FC<PaginationProps> = ({pages, clickEv}) => {
                             <div key={`pagination-${index + 1}`} >
                                 <button 
                                     onClick={() => {
-                                        setSelected(index + 1)
+                                        // setSelected(index + 1)
                                         clickEv(index + 1)
                                     }}
                                     className={`px-3 py-1 rounded-lg ${selected === index + 1 ? "bg-purple-600" : "hover:bg-neutral-500"}`}
@@ -90,7 +89,7 @@ const Pagination: React.FC<PaginationProps> = ({pages, clickEv}) => {
                         <div key={`pagination-${index + 1}`} >
                             <button 
                                 onClick={() => {
-                                    setSelected(index + 1)
+                                    // setSelected(index + 1)
                                     clickEv(index + 1)
                                 }}
                                 className={`px-3 py-1 rounded-lg  ${selected === index + 1 ? "bg-purple-600" : "hover:bg-neutral-500"}`}
@@ -103,11 +102,8 @@ const Pagination: React.FC<PaginationProps> = ({pages, clickEv}) => {
              }
             <button 
                 onClick={() => {
-                    setSelected(prev => {
-                        if(prev === pages) return prev
-                        clickEv(prev + 1)
-                        return prev + 1
-                    })
+                    if(selected === pages) return
+                    return clickEv(selected + 1)
                 }
             }
                 className="col-start-9"
@@ -120,6 +116,7 @@ const Pagination: React.FC<PaginationProps> = ({pages, clickEv}) => {
 
 interface PaginationProps {
     pages: number;
+    selected: number;
     clickEv: (page: number) => void;
 }
 
