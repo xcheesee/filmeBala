@@ -20,14 +20,14 @@ const Signup: NextPage = () => {
     const router = useRouter()
     return(
         <>
-            <div className="w-3/6 bg-neutral-900 self-center justify-self-center rounded relative b-10 my-20" style={{
+            <div className="xl:w-3/6 bg-neutral-900 self-center justify-self-center rounded relative b-10 my-20" style={{
                 // background: GRADIENT_COLOR,
             }}>
                 <div
-                    className="grid grid-cols-[1fr_min-content_1fr] h-full bg-neutral-900 relative top-2 rounded-b"
+                    className="grid max-lg:grid-rows-[max-content_min-content_1fr] lg:grid-cols-[1fr_min-content_1fr] h-full bg-neutral-900 relative top-2 rounded-b"
                 >
                     <form 
-                        className="flex flex-col gap-6  w-3/4 m-auto"
+                        className="flex flex-col gap-6  w-3/4 m-auto py-16"
                         id="login-form"
                         onSubmit={async (e) => {
                             e.preventDefault()
@@ -48,7 +48,7 @@ const Signup: NextPage = () => {
                                 ?<CircularLoader/> : <></>}Login</div></Button>
                         </div>
                     </form>
-                    <div className="h-5/6 w-[3px] self-center justify-self-center" style={{
+                    <div className=" h-[3px] w-5/6 lg:h-5/6 lg:w-[3px] self-center justify-self-center" style={{
                         background: GRADIENT_COLOR
                     }}></div>
                     <form

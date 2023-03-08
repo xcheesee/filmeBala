@@ -95,7 +95,7 @@ const FilmePage: NextPage = () => {
                                         <StarRating />
                                     </div>
                                 </div>
-                                <div className="max-w-[120ch] self-center justify-self-center text-xl col-span-2 leading-loose">
+                                <div className="max-w-[80ch] self-center justify-self-center text-xl col-span-2 leading-loose">
                                     {filme?.data?.overview}
                                     {/* <SkeletonElement width="200px" height="50px"/> */}
                                 </div>
