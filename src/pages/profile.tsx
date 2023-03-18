@@ -1,3 +1,5 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faBars } from "@fortawesome/free-solid-svg-icons"
 import { type NextPage } from "next"
 import { useSession } from "next-auth/react"
 import Image from "next/image"
@@ -19,28 +21,42 @@ const Profile: NextPage = () => {
     const userId: number | null = session.data?.user?.id === undefined ? null : +session.data?.user?.id
     const userData = trpc.user.getUser.useQuery(userId)
     const editUser = trpc.user.editInfo.useMutation()
+    const [ sideToggled, setSideToggled ] = useState(false);
+
     return(
         <RedirectUnauth>
             {
                 userData.isLoading 
                     ? <div><PageSpinner /></div>
-                    :<div className="grid grid-cols-[200px_1fr]">
-                    <div className="flex flex-col gap-2 bg-neutral-900 pt-4">
+                    :<div className="grid md:grid-cols-[200px_1fr] relative">
+                        <button 
+                            className="fixed"
+                            onClick={() => setSideToggled(true)}
+                        >
+                        <div className="w-16 h-16 rounded-full bg-neutral-900 m-4 md:hidden flex justify-center items-center">
+                            <FontAwesomeIcon icon={faBars} className="" size="2xl"/>
+                        </div>
+
+                        </button>
+                    <div className={`flex flex-col gap-2 max-md:absolute w-full h-full bg-neutral-900 pt-4 transition ${sideToggled? "max-md:translate-x-0" : "max-md:-translate-x-full"}`}>
                         <SidebarElement
                             tabValue={0}
                             setTab={setSelectedTab}
+                            setDrawer={setSideToggled}
                         >
                             Editar
                         </SidebarElement>
                         <SidebarElement
                             tabValue={1}
                             setTab={setSelectedTab}
+                            setDrawer={setSideToggled}
                         >
                             Filmes a assistir
                         </SidebarElement>
                         <SidebarElement
                             tabValue={2}
                             setTab={setSelectedTab}
+                            setDrawer={setSideToggled}
                         >
                             Deletar conta
                         </SidebarElement>
@@ -52,7 +68,7 @@ const Profile: NextPage = () => {
                             tabHeader="Editar Conta"
                         >
                             <form
-                                className="grid grid-cols-2 gap-6  w-3/4 m-auto py-8"
+                                className="grid grid-cols-2 gap-6  md:w-3/4 m-auto py-8"
                                 id="signup-form"
                                 autoComplete="off"
                                 onSubmit={async (e) => {
