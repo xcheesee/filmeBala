@@ -17,15 +17,18 @@ div, p {
     animation-fill-mode: forwards;
 }
 
-:hover.sidebar {
-    animation: pull 1s;
-    animation-fill-mode: forwards;
+@media screen and (min-width: 768px){
+    :hover.sidebar {
+        animation: pull 1s;
+        animation-fill-mode: forwards;
+    }
+    
+    :hover.sidebar * {
+        animation: offsetPull 1s;
+        animation-fill-mode: forwards;
+    }
 }
 
-:hover.sidebar * {
-    animation: offsetPull 1s;
-    animation-fill-mode: forwards;
-}
 
 .gradient_text {
     background: -webkit-linear-gradient(to right, #b3ffab, #12fff7);
