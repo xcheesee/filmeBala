@@ -68,7 +68,7 @@ const Profile: NextPage = () => {
                             tabHeader="Editar Conta"
                         >
                             <form
-                                className="grid grid-cols-2 gap-6  md:w-3/4 m-auto py-8"
+                                className="grid grid-cols-2 gap-6 px-4  md:w-3/4 m-auto py-8"
                                 id="signup-form"
                                 autoComplete="off"
                                 onSubmit={async (e) => {
@@ -101,7 +101,7 @@ const Profile: NextPage = () => {
                         >
                             {userData.data?.watchLater?.map((ele, index) => {
                                 return (
-                                <div className="flex justify-around gap-4 px-4 py-8" key={`movie_to_watch_${index}`}>
+                                <div className="flex max-md:flex-col justify-around gap-4 px-4 py-8" key={`movie_to_watch_${index}`}>
                                     <div className="flex">
                                     <Image 
                                         src={ele.posterPath} 
